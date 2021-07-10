@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Challenges from './components/Challenges';
 
-function App() {
+const App = () => {
+
+  const [value, setValue] = useState('');
+  const [challenges, setChallenges] = useState([]);
+
+  const handleOnChanges = event => {
+    const newValue = event.target.value;
+    setValue(newValue);
+  }
+
+  const handleOnSubmit = event => {
+    event.preventDefault();
+    const newChallenges = [...challenges, {idx: challenges.length, done: false, text: value}];
+    setChallenges(newChallenges);
+    setValue('');
+  }
+
+  const handleRemoveChallenge = idx => {
+    const newChallenges = challenges.filter(ch => {
+      if (idx === ch.idx) return false;
+      return true;
+    });
+    setChallenges(newChallenges);
+  }
+
+  const handleMarkDone = idx => {
+    const newChallenges = challenges.map(ch => {
+      if (idx === ch.idx) {
+        ch.done = !ch.done;
+      }
+      return ch;
+    });
+    setChallenges(newChallenges);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form className='todos-lists' onSubmit={handleOnSubmit}>
+        <input type="text" value={value} onChange={handleOnChanges} />
+        <button>Agregar</button>
+      </form>
+      <header>Retos de hoy</header>
+      <Challenges 
+        onRemove={handleRemoveChallenge}
+        onMarkDone={handleMarkDone}
+        challenges={challenges} />
     </div>
   );
 }

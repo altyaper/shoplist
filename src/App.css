@@ -1,38 +1,107 @@
+body {
+  background-color: #f5f5f5;
+  width: 600px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.todos-lists {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.todos-lists input {
+  padding: 10px;
+  flex: 1;
+  margin-right: 1em;
+}
+
+header {
+  font-family: courier, monospace;
+  text-align: center;
+  font-size: 40px;
+  padding-top: 30px;
+  font-weight: bold;
+  color: #f9f9f9;
+  font-size: 60px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  
+}
+
+.list {
+  color: #555;
+  font-size: 22px;
+  padding: 0 !important;
+  width: 600px;
+  font-family: courier, monospace;
+  border: 1px solid #dedede;
+  background-color: #2563EE;
+}
+
+.list li {
+  list-style: none;
+  border-bottom: 1px dotted #ccc;
+  height: auto;
+  font-size: 30px;
+  padding: 10px;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #fff;
+  text-align: left;
+  position: relative;
+}
+
+.list li button {
+  position: absolute;
+  right: -100px;
+  padding: 15px;
+  border: 1px solid gray;
+  top: 0;
+  border-radius: 0;
+}
+
+.challenge {
+  display: flex;
+  align-items: center;
+}
+
+.challenge-title {
+  margin-right: auto;
+  margin-left: 15px;
+  font-size: 40px;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.challenge-delete {
+  font-size: 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.gradient-animation {
+  background: linear-gradient(270deg, #2563ee, #02298a, #5f7bc1);
+  background-size: 600% 600%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
-
-.App-link {
-  color: #61dafb;
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
