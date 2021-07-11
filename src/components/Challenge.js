@@ -10,9 +10,11 @@ const Challenge = ({
     <li className='challenge gradient-animation'>
       <div className='inline challenge-check' onClick={() => onMarkDone(challenge.idx)}>
         { challenge.done ? (
-          <FiCheckSquare />
+          <span className='challenge-check challenge-checked'><FiCheckSquare /></span>
         ) : (
-          <FiSquare />
+          <span className='challenge-check'>
+            <FiSquare />
+          </span>
         )}
       </div>
       <span className='challenge-title'>{challenge.text}</span>

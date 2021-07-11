@@ -36,13 +36,10 @@ header {
   padding: 0 !important;
   width: 600px;
   font-family: courier, monospace;
-  border: 1px solid #dedede;
-  background-color: #2563EE;
 }
 
 .list li {
   list-style: none;
-  border-bottom: 1px dotted #ccc;
   height: auto;
   font-size: 30px;
   padding: 10px;
@@ -51,6 +48,9 @@ header {
   color: #fff;
   text-align: left;
   position: relative;
+  animation: SlideDown 2s ease-in;
+  border-radius: 10px;
+  margin-top: 5px;
 }
 
 .list li button {
@@ -73,6 +73,10 @@ header {
   font-size: 40px;
 }
 
+.challenge-check {
+  font-size: 50px;
+}
+
 .App {
   text-align: center;
 }
@@ -81,13 +85,29 @@ header {
   font-size: 30px;
 }
 
+.challenge-checked {
+  color: #DA9BF5;
+}
+
 .gradient-animation {
-  background: linear-gradient(270deg, #2563ee, #02298a, #5f7bc1);
+  background: linear-gradient(270deg, #8C50AF, #a740e3, #54276e);
   background-size: 600% 600%;
 
   -webkit-animation: AnimationName 30s ease infinite;
   -moz-animation: AnimationName 30s ease infinite;
   animation: AnimationName 30s ease infinite;
+}
+
+@-webkit-keyframes SlideDown {
+  0% {
+    transform: translateY(-100px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(100px);
+  }
 }
 
 @-webkit-keyframes AnimationName {
