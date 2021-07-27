@@ -1,5 +1,5 @@
 import { FiCheckSquare, FiSquare } from 'react-icons/fi';
-import { TiDeleteOutline } from 'react-icons/ti';
+import { TiTrash } from 'react-icons/ti';
 
 const Challenge = ({
   onMarkDone,
@@ -19,7 +19,7 @@ const Challenge = ({
       </div>
       <span className='challenge-title'>{challenge.text}</span>
       <button className='challenge-delete' onClick={() => onRemove(challenge.idx)}>
-        <TiDeleteOutline />
+        <TiTrash />
       </button>
     </li>
   );
