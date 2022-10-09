@@ -1,11 +1,18 @@
 import { Paper } from '@mui/material';
 import styled from 'styled-components';
 
-const TaskWrapper = styled.li`
+const TaskWrapper = styled(Paper)`
   border: 1px solid #E3E4E8;
-  padding: 1.2em;
-  border-radius: 20px;
+  padding: 0 0.8em;
+  border-radius: 15px;
+  margin-bottom: 20px;
 `;
+
+const TaskText = styled.p`
+  font-size: 1.2em;
+  line-height: 1.6em;
+`;
+
 
 export const Task = ({
   onMarkDone,
@@ -13,9 +20,9 @@ export const Task = ({
   task
 }) => {
   return (
-    <Paper variant="outlined">
-      <span>{task.text}</span>
-    </Paper>
+    <TaskWrapper variant="outlined">
+      <TaskText>{task.text}</TaskText>
+    </TaskWrapper>
   );
 }
 

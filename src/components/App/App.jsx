@@ -1,57 +1,38 @@
 import { useState } from 'react';
 import Tasks from '../Task/Tasks';
-import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
-import { ModalButton } from '../ModalButton';
+import TaskDialog, { ColorButton, FooterWrapper, TitleModal } from '../TaskDialog/TaskDialog';
 import styled from 'styled-components';
+import { Container } from '@mui/material';
+import useSession from '../../hooks/sessionHook';
 
 const MainFooterWrapper = styled(FooterWrapper)`
+  padding: 1.2em;
 `;
 
 const PurpleButton = styled(ColorButton)`
-  background-color: red;
+  &.MuiButtonBase-root {
+    background-color: #A362EA;
+  }
+`;
+
+const AppWrapper = styled(Container)`
 `;
 
 
 const App = () => {
+  const [tasks, onAdd, onDelete, onDone] = useSession();
   const [openDialog, setOpenDialog] = useState(false);
-  const [value, setValue] = useState('');
-  const [titleValue, setTitleValue] = useState(JSON.parse(window.localStorage.getItem('header_title')) || 'Retos de hoy');
-  const [tasks, setTasks] = useState(JSON.parse(window.localStorage.getItem('tasks')) || []);
-  
-  const handleTitleValue = event => {
-    const newTitleValue = event.target.value;
-    setTitleValue(newTitleValue);
-    window.localStorage.setItem("header_title", JSON.stringify(newTitleValue));
-  }
   
   const handleOnSubmit = ({ task }) => {
-    const newTasks = [...tasks, { idx: tasks.length, done: false, text: task }];
-    setTasks(newTasks);
-    updateLocalStorage(newTasks);
-  }
-
-  const updateLocalStorage = (sessionTasks) => {
-    window.localStorage.setItem("tasks", JSON.stringify(sessionTasks));
+    onAdd(task);
   }
   
   const handleRemoveTask = idx => {
-    const newTasks = tasks.filter(ch => {
-      if (idx === ch.idx) return false;
-      return true;
-    });
-    setTasks(newTasks);
-    updateLocalStorage(newTasks);
+    onDelete(idx);
   }
   
   const handleMarkDone = idx => {
-    const newTasks = tasks.map(ch => {
-      if (idx === ch.idx) {
-        ch.done = !ch.done;
-      }
-      return ch;
-    });
-    setTasks(newTasks);
-    updateLocalStorage(newTasks);
+    onDone(idx);
   }
 
 
@@ -64,12 +45,15 @@ const App = () => {
   }
   
   return (
-    <>
+    <AppWrapper>
       <TaskDialog
         onSubmit={handleOnSubmit}
         open={openDialog}
         onCloseModal={handleCloseModal}
       />
+      <TitleModal>
+        Tasks
+      </TitleModal>
       <Tasks
         onRemove={handleRemoveTask}
         onMarkDone={handleMarkDone}
@@ -84,7 +68,7 @@ const App = () => {
           ADD NEW TASK
         </PurpleButton>
       </MainFooterWrapper>
-    </>
+    </AppWrapper>
   );
 }
 

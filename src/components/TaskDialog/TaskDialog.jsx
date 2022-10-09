@@ -41,7 +41,7 @@ export const FooterWrapper = styled.div`
   left: 0;
   width: 100%;
   text-align: center;
-  padding-bottom: 2em;
+  padding: 1.2em;
 `;
 
 const HeaderModal = styled.div`
@@ -52,10 +52,11 @@ const ContentModal = styled.div`
   display: block;
 `;
 
-const TitleModal = styled.h2`
+export const TitleModal = styled.h2`
   font-size: 3em;
   font-weight: bold;
   line-height: 1.2em;
+  margin-top: 1.4em;
 `;
 
 const CloseSection = styled.div`
@@ -63,6 +64,8 @@ const CloseSection = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  padding: 1.2em;
+  padding-left: 0;
 `;
 
 const DialogContentWrapper = styled(DialogContent)`
@@ -103,12 +106,12 @@ export const TaskDialog = ({
           return (
             <form onSubmit={handleSubmit}>
               <HeaderModal>
-                <TitleModal>
+                export <TitleModal>
                   <div>Create</div>
                   <div>New Task</div>
-                </TitleModal>
+                export </TitleModal>
                 <CloseSection>
-                  <TUButton onClick={onCloseModal}>
+                  <TUButton size="large" onClick={onCloseModal}>
                     <ArrowBack />
                   </TUButton>
                 </CloseSection>

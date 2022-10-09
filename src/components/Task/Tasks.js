@@ -3,7 +3,14 @@ import styled from 'styled-components';
 
 const TasksWrapper = styled.ul`
   list-style: none;
-  padding: 0;
+  padding: 1.2em;
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  left: 0;
+  height: 100%;
+  overflow: scroll;
+  padding-bottom: 10em;
 `
 
 const Tasks = props => {
