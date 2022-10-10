@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from '@mui/material';
+import { Dialog, DialogContent, Switch, Container, Grid } from '@mui/material';
 import { Button } from '@mui/material';
 import { TUTextField, TUButton } from '../MUITheme';
 import { styled as MUIStyled } from '@mui/material/styles';
@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { ArrowBack } from '@mui/icons-material';
+import { TaskSwitch } from './TaskSwitch';
 
 const newTaskSchema = Yup.object().shape({
   task: Yup.string()
@@ -83,64 +84,71 @@ export const TaskDialog = ({
       fullWidth
       open={open}>
       <DialogContentWrapper>
-        <Formik
-          initialValues={{ task: '' }}
-          validationSchema={newTaskSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              setSubmitting(false);
-              onSubmit(values);
-              onCloseModal()
-            }, 100);
+        <Container>
+          <Formik
+            initialValues={{ task: '' }}
+            validationSchema={newTaskSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                setSubmitting(false);
+                onSubmit(values);
+                onCloseModal()
+              }, 500);
+            }}
+          >{({
+            values,
+            errors,
+            handleSubmit,
+            handleChange,
+            isSubmitting,
+          }) => {
+            const errorValues = Object.values(errors);
+            const hasError = errorValues.length > 0;
+            const firstError = (hasError && errorValues[0]) || null;
+            return (
+              <form onSubmit={handleSubmit}>
+                <HeaderModal>
+                  <TitleModal>
+                    <div>Create</div>
+                    <div>New Task</div>
+                  </TitleModal>
+                  <CloseSection>
+                    <TUButton size="large" onClick={onCloseModal}>
+                      <ArrowBack />
+                    </TUButton>
+                  </CloseSection>
+                </HeaderModal>
+                <ContentModal>
+                  <TUTextField
+                    error={hasError}
+                    helperText={firstError}
+                    label="Task"
+                    name="task"
+                    multiline
+                    value={values.task}
+                    onChange={handleChange}
+                  />
+                  <TaskSwitch
+                    label='Delete on complete'
+                    name='deleteOnComplete'
+                    onChange={handleChange}
+                  />
+                </ContentModal>
+                <FooterWrapper>
+                  <ColorButton
+                    size='large'
+                    disableElevation
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    CREATE TASK
+                  </ColorButton>
+                </FooterWrapper>
+              </form>
+            )
           }}
-        >{({
-          values,
-          errors,
-          handleSubmit,
-          handleChange,
-          isSubmitting,
-        }) => {
-          const errorValues = Object.values(errors);
-          const hasError = errorValues.length > 0;
-          const firstError = hasError && errorValues[0] || null;
-          return (
-            <form onSubmit={handleSubmit}>
-              <HeaderModal>
-                export <TitleModal>
-                  <div>Create</div>
-                  <div>New Task</div>
-                export </TitleModal>
-                <CloseSection>
-                  <TUButton size="large" onClick={onCloseModal}>
-                    <ArrowBack />
-                  </TUButton>
-                </CloseSection>
-              </HeaderModal>
-              <ContentModal>
-                <TUTextField
-                  error={hasError}
-                  helperText={firstError}
-                  label="Task"
-                  name="task"
-                  multiline
-                  value={values.task}
-                  onChange={handleChange}
-                />
-              </ContentModal>
-              <FooterWrapper>
-                <ColorButton
-                  size='large'
-                  disableElevation
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  CREATE TASK
-                </ColorButton>
-              </FooterWrapper>
-            </form>
-          )
-        }}
-        </ Formik>
+          </ Formik>
+        </Container>
       </DialogContentWrapper>
     </DialogWrapper>
   )

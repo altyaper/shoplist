@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Tasks from '../Task/Tasks';
-import TaskDialog, { ColorButton, FooterWrapper, TitleModal } from '../TaskDialog/TaskDialog';
+import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
 import styled from 'styled-components';
 import { Container } from '@mui/material';
 import useSession from '../../hooks/sessionHook';
@@ -46,14 +46,6 @@ const App = () => {
   
   return (
     <AppWrapper>
-      <TaskDialog
-        onSubmit={handleOnSubmit}
-        open={openDialog}
-        onCloseModal={handleCloseModal}
-      />
-      <TitleModal>
-        Tasks
-      </TitleModal>
       <Tasks
         onRemove={handleRemoveTask}
         onMarkDone={handleMarkDone}
@@ -68,6 +60,11 @@ const App = () => {
           ADD NEW TASK
         </PurpleButton>
       </MainFooterWrapper>
+      <TaskDialog
+        onSubmit={handleOnSubmit}
+        open={openDialog}
+        onCloseModal={handleCloseModal}
+      />
     </AppWrapper>
   );
 }

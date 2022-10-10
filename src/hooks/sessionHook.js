@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { useEffect, useState } from "react"
 
 const useSession = (task) => {
@@ -5,18 +6,26 @@ const useSession = (task) => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const currentTasks = JSON.parse(window.localStorage.getItem('tasks'));
+    const currentTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
     setTasks(currentTasks);
   }, []);
 
-  const updateLocalStorage = (sessionTasks) => {
-    window.localStorage.setItem("tasks", JSON.stringify(sessionTasks));
+  const updateTasks = (newTasks) => {
+    const reversed = newTasks;
+    window.localStorage.setItem("tasks", JSON.stringify(reversed));
+    setTasks(reversed);
   }
 
   const onAdd = (text) => {
-    const newTasks = [...tasks, { idx: tasks.length, done: false, text }];
-    setTasks(newTasks);
-    updateLocalStorage(newTasks);
+    const newTasks = [
+      {
+        idx: tasks.length,
+        done: false,
+        text,
+        createdAt: dayjs().format(),
+        updatedAt: dayjs().format()
+      }, ...tasks,];
+    updateTasks(newTasks);
   }
 
 
@@ -25,8 +34,7 @@ const useSession = (task) => {
       if (idx === ch.idx) return false;
       return true;
     });
-    setTasks(newTasks);
-    updateLocalStorage(newTasks);
+    updateTasks(newTasks);
   }
 
   const onDone = (idx) => {
@@ -36,8 +44,7 @@ const useSession = (task) => {
       }
       return ch;
     });
-    setTasks(newTasks);
-    updateLocalStorage(newTasks);
+    updateTasks(newTasks);
   }
 
   return [

@@ -1,5 +1,6 @@
 import { Task } from "./Task";
 import styled from 'styled-components';
+import { TitleModal } from '../TaskDialog/TaskDialog';
 
 const TasksWrapper = styled.ul`
   list-style: none;
@@ -16,11 +17,16 @@ const TasksWrapper = styled.ul`
 const Tasks = props => {
   const { tasks } = props;
   return (
-    <TasksWrapper className="list">
-      { tasks && tasks.map((task, idx) => (
-        <Task key={idx} {...props} task={task} />
-      ))}
-    </TasksWrapper>
+    <div>
+      <TitleModal>
+        Tasks
+      </TitleModal>
+      <TasksWrapper className="list">
+        { tasks && tasks.map((task, idx) => (
+          <Task key={idx} {...props} task={task} />
+        ))}
+      </TasksWrapper>
+    </div>
   )
 }
 
