@@ -1,5 +1,6 @@
 import { Grid, Switch } from '@mui/material';
 import styled from 'styled-components';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const TaskOptionWrapper = styled.div`
   border: 1px solid #E3E4E8;
@@ -9,6 +10,17 @@ const TaskOptionWrapper = styled.div`
   margin-top: 2em;
 `;
 
+const IconWrapper = styled.div`
+  background: #fbe8e8;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.4em;
+  color: #c76666;
+  width: 4.2em;
+`;
+
 export const TaskSwitch = ({
   onChange,
   name,
@@ -16,17 +28,20 @@ export const TaskSwitch = ({
 }) => {
   return (
     <TaskOptionWrapper>
-      <Grid container spacing={2}>
-        <Grid item xs={2}>
-          Icon
+      <Grid alignItems="center" container spacing={2}>
+        <Grid item xs={3}>
+          <IconWrapper>
+            <DeleteIcon />
+          </IconWrapper>
         </Grid>
         <Grid item xs={6}>
           {label}
         </Grid>
-        <Grid style={{alignItems: 'right'}} item xs={4}>
+        <Grid item xs={3}>
           <Switch
             onChange={onChange}
             name={name}
+            defaultChecked
           />
         </Grid>
       </Grid>

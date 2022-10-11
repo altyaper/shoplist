@@ -39,7 +39,7 @@ const TaskDate = styled.span`
 
 const DoneLabel = styled.span`
   font-weight: 600;
-`
+`;
 
 export const Task = ({
   onMarkDone,
@@ -57,7 +57,7 @@ export const Task = ({
         </Grid>
         <Grid item xs={2}>
           <Checkbox
-            onChange={() => onMarkDone(task.idx)}
+            onChange={() => onMarkDone(task)}
             checked={task.done}
           />
         </Grid>

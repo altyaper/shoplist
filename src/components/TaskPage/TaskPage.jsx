@@ -14,34 +14,29 @@ const PurpleButton = styled(ColorButton)`
   }
 `;
 
+const TaskPageWrapper = styled.div`
+  height: 100%;
+  position: absolute;
+  width: 100%;`
+;
+
 export const TaskPage = () => {
 
-  const [tasks, onAdd, onDelete, onDone] = useSession();
+  const {tasks, onAdd, onDelete, onDone} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
   
-  const handleOnSubmit = ({ task }) => {
-    onAdd(task);
-  }
+  const handleOnSubmit = (task) => onAdd(task);
   
-  const handleRemoveTask = idx => {
-    onDelete(idx);
-  }
+  const handleRemoveTask = idx => onDelete(idx);
   
-  const handleMarkDone = idx => {
-    onDone(idx);
-  }
+  const handleMarkDone = idx => onDone(idx);
 
+  const handleCloseModal = () => setOpenDialog(false);
 
-  const handleCloseModal = () => {
-    setOpenDialog(false);
-  }
-
-  const handleOpenModal = () => {
-    setOpenDialog(true);
-  }
+  const handleOpenModal = () => setOpenDialog(true);
 
   return (
-    <div>
+    <TaskPageWrapper>
       <Tasks
         onRemove={handleRemoveTask}
         onMarkDone={handleMarkDone}
@@ -62,7 +57,7 @@ export const TaskPage = () => {
         open={openDialog}
         onCloseModal={handleCloseModal}
       />
-    </div>
+    </TaskPageWrapper>
   )
 }
 

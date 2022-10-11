@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 const useSession = () => {
 
   const [tasks, setTasks] = useState([]);
-
+  
   useEffect(() => {
     const currentTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
     setTasks(currentTasks);
@@ -15,12 +15,20 @@ const useSession = () => {
     setTasks(newTasks);
   }
 
-  const onAdd = (text) => {
+  // const findTask = (idx) => {
+  //   return tasks.find((task) => idx === task.idx);
+  // }
+
+  const onAdd = ({
+    text,
+    deleteOnComplete,
+  }) => {
     const newTasks = [
       {
         idx: tasks.length,
         done: false,
         text,
+        deleteOnComplete,
         createdAt: dayjs().format(),
         updatedAt: dayjs().format()
       }, ...tasks];
@@ -28,34 +36,43 @@ const useSession = () => {
   }
 
   const onDelete = (idx) => {
-    const newTasks = tasks.filter(ch => {
+    return tasks.filter(ch => {
       if (idx === ch.idx) return false;
       return true;
     });
-    updateTasks(newTasks);
   }
 
   const onDeleteAll = () => {
     window.localStorage.removeItem('tasks');
+    setTasks([]);
   }
 
-  const onDone = (idx) => {
-    const newTasks = tasks.map(ch => {
-      if (idx === ch.idx) {
-        ch.done = !ch.done;
+  const markAsDone = (idx) => {
+    return tasks.map(task => {
+      if (idx === task.idx) {
+        task.done = !task.done;
       }
-      return ch;
+      return task;
     });
+  }
+
+  const onDone = (task) => {
+    let newTasks = [];
+    if (task.deleteOnComplete) {
+      newTasks = onDelete(task.idx);
+    } else {
+      newTasks = markAsDone(task.idx);
+    }
     updateTasks(newTasks);
   }
 
-  return [
+  return {
     tasks,
     onAdd,
     onDelete,
     onDone,
     onDeleteAll,
-  ];
+  };
 
 }
 

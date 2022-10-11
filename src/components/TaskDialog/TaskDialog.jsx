@@ -9,7 +9,7 @@ import { ArrowBack } from '@mui/icons-material';
 import { TaskSwitch } from './TaskSwitch';
 
 const newTaskSchema = Yup.object().shape({
-  task: Yup.string()
+  text: Yup.string()
     .max(50, 'Too long!')
     .required('Required')
 });
@@ -87,7 +87,7 @@ export const TaskDialog = ({
       <DialogContentWrapper>
         <Container>
           <Formik
-            initialValues={{ task: '' }}
+            initialValues={{ text: '',  deleteOnComplete: true }}
             validationSchema={newTaskSchema}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
@@ -124,14 +124,15 @@ export const TaskDialog = ({
                     error={hasError}
                     helperText={firstError}
                     label="Task"
-                    name="task"
+                    name="text"
                     multiline
-                    value={values.task}
+                    value={values.text}
                     onChange={handleChange}
                   />
                   <TaskSwitch
                     label='Delete on complete'
                     name='deleteOnComplete'
+                    value={values.deleteOnComplete}
                     onChange={handleChange}
                   />
                 </ContentModal>
