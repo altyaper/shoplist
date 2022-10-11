@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
@@ -10,14 +11,14 @@ const AppWrapper = styled.div`
 
 const BlackSide = styled.div`
   background-color: #23242A;
-  width: ${({ sideOpen }) => sideOpen && '100px' || '0px'};
+  width: ${({ sideOpen }) => sideOpen? '100px' : '0px'};
   text-align: center;
   position: absolute;
   right: 0;
   height: 100%;
   z-index: 1;
   top: 0;
-  padding: ${({ sideOpen }) => sideOpen && '100px 5px 0 5px' || '100px 0 0 0'};
+  padding: ${({ sideOpen }) => sideOpen ? '100px 5px 0 5px' : '100px 0 0 0'};
   transition: all 0.5s ease;
 `;
 
@@ -48,6 +49,7 @@ const App = () => {
   }
 
   const handleCleanSession = () => {
+    // eslint-disable-next-line no-restricted-globals
     if (confirm('Are you sure you want to delete this session?')) {
       deleteAll();
       setSideOpen(false);

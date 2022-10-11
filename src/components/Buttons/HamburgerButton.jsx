@@ -36,6 +36,7 @@ const Line = styled.span`
           width: 30px;
           transform: translateX(${({ open }) => open ? '-17px' : '6px' });
         `;
+      default:
     }
   }}
 `;
