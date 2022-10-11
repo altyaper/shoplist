@@ -14,11 +14,11 @@ const TaskWrapper = styled(Paper)`
 
   ${(props) => props.done && (
     css`
-      background-color: #A362EA;
-      color: white;
+      background-color: #A362EA !important;
+      color: white !important;
 
       .Mui-checked {
-        color: white;
+        color: white !important;
       }
     `
   )}
