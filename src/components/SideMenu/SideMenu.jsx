@@ -35,9 +35,7 @@ const SideMenuWrapper = styled.div``;
 
 export const SideMenu = () => {
 
-  const {
-    onDeleteAll
-   } = useSession();
+  const { onDeleteAll } = useSession();
   const [sideOpen, setSideOpen] = useState(false);
 
   const handleToggleSideBar = () => {

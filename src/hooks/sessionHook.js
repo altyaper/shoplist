@@ -1,38 +1,40 @@
+import { useEffect, useState } from "react";
 import dayjs from 'dayjs'
-import { useEffect, useState } from "react"
+import LocalStorageDB from 'local-storage-db';
 
 const useSession = () => {
-
+  const db = new LocalStorageDB('todo');
   const [tasks, setTasks] = useState([]);
   
   useEffect(() => {
-    const currentTasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
-    setTasks(currentTasks);
+    const currentTasksDB = db.get('tasks') || [];
+    setTasks(currentTasksDB);
   }, []);
 
-  const updateTasks = (newTasks) => {
-    window.localStorage.setItem("tasks", JSON.stringify(newTasks));
-    setTasks(newTasks);
+  const updateTasks = () => {
+    const currentTasks = db.get('tasks');
+    setTasks(currentTasks);
   }
-
-  // const findTask = (idx) => {
-  //   return tasks.find((task) => idx === task.idx);
-  // }
 
   const onAdd = ({
     text,
     deleteOnComplete,
   }) => {
-    const newTasks = [
-      {
-        idx: tasks.length,
-        done: false,
-        text,
-        deleteOnComplete,
-        createdAt: dayjs().format(),
-        updatedAt: dayjs().format()
-      }, ...tasks];
-    updateTasks(newTasks);
+    const newTask = {
+      idx: tasks.length,
+      done: false,
+      text,
+      deleteOnComplete,
+      createdAt: dayjs().format(),
+      updatedAt: dayjs().format()
+    };
+    const current = db.get('tasks');
+    if (typeof current === "object") {
+      db.create('tasks', newTask);
+    } else {
+      db.create('tasks', [newTask]);
+    }
+    updateTasks();
   }
 
   const onDelete = (idx) => {
@@ -43,27 +45,19 @@ const useSession = () => {
   }
 
   const onDeleteAll = () => {
-    window.localStorage.removeItem('tasks');
-    setTasks([]);
-  }
-
-  const markAsDone = (idx) => {
-    return tasks.map(task => {
-      if (idx === task.idx) {
-        task.done = !task.done;
-      }
-      return task;
-    });
+    db.remove('tasks');
+    updateTasks();
   }
 
   const onDone = (task) => {
-    let newTasks = [];
+    const idx = db.get('tasks').findIndex(t => t.idx === task.idx);
     if (task.deleteOnComplete) {
-      newTasks = onDelete(task.idx);
+      db.remove('tasks', idx);
     } else {
-      newTasks = markAsDone(task.idx);
+      const updated = {...task, done: !task.done};
+      db.update(updated, 'tasks', idx);
     }
-    updateTasks(newTasks);
+    updateTasks();
   }
 
   return {
