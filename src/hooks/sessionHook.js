@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from "react"
 
-const useSession = (task) => {
+const useSession = () => {
 
   const [tasks, setTasks] = useState([]);
 
@@ -11,9 +11,8 @@ const useSession = (task) => {
   }, []);
 
   const updateTasks = (newTasks) => {
-    const reversed = newTasks;
-    window.localStorage.setItem("tasks", JSON.stringify(reversed));
-    setTasks(reversed);
+    window.localStorage.setItem("tasks", JSON.stringify(newTasks));
+    setTasks(newTasks);
   }
 
   const onAdd = (text) => {
@@ -24,10 +23,9 @@ const useSession = (task) => {
         text,
         createdAt: dayjs().format(),
         updatedAt: dayjs().format()
-      }, ...tasks,];
+      }, ...tasks];
     updateTasks(newTasks);
   }
-
 
   const onDelete = (idx) => {
     const newTasks = tasks.filter(ch => {
@@ -35,6 +33,10 @@ const useSession = (task) => {
       return true;
     });
     updateTasks(newTasks);
+  }
+
+  const onDeleteAll = () => {
+    window.localStorage.removeItem('tasks');
   }
 
   const onDone = (idx) => {
@@ -52,6 +54,7 @@ const useSession = (task) => {
     onAdd,
     onDelete,
     onDone,
+    onDeleteAll,
   ];
 
 }

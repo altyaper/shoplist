@@ -57,7 +57,8 @@ export const TitleModal = styled.h2`
   font-size: 3em;
   font-weight: bold;
   line-height: 1.2em;
-  margin-top: 1.4em;
+  margin-top: ${({ marginTop }) => marginTop ? '1.4em' : '0em'};
+  padding-top: ${({ marginTop }) => marginTop ? '0' : '50px' };
 `;
 
 const CloseSection = styled.div`
@@ -108,7 +109,7 @@ export const TaskDialog = ({
             return (
               <form onSubmit={handleSubmit}>
                 <HeaderModal>
-                  <TitleModal>
+                  <TitleModal marginTop>
                     <div>Create</div>
                     <div>New Task</div>
                   </TitleModal>
