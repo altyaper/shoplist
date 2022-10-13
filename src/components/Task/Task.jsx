@@ -53,15 +53,17 @@ export const Task = ({
 
   return (
     <TaskWrapper done={task.done} variant="outlined">
-      <Grid container spacing={2}>
-        <Grid item xs={10}>
+      <Grid container spacing={2} >
+        <Grid item xs={10} direction="row" alignItems="flex-end">
           <TaskText>{task.text}</TaskText>
         </Grid>
-        <Grid item xs={2}>
-          <Checkbox
-            onChange={() => onMarkDone(task)}
-            checked={task.done}
-          />
+        <Grid item xs={2} style={{textAlign: 'right'}}>
+          <Grid container justifyContent="flex-end">
+            <Checkbox
+              onChange={() => onMarkDone(task)}
+              checked={task.done}
+            />
+          </Grid>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
@@ -69,7 +71,9 @@ export const Task = ({
           <TaskDate>{formatedDate}</TaskDate>
         </Grid>
         <Grid item xs={5}>
-          <DoneLabel done={task.done}>COMPLETED!</DoneLabel>
+          <Grid container justifyContent="flex-end">
+            <DoneLabel done={task.done}>COMPLETED!</DoneLabel>
+          </Grid>
         </Grid>
       </Grid>
     </TaskWrapper>

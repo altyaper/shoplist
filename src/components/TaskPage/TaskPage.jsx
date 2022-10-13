@@ -3,9 +3,10 @@ import useSession from '../../hooks/sessionHook';
 import Tasks from '../Task/Tasks';
 import styled from 'styled-components';
 import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
+import { Container } from '@mui/material';
 
 const MainFooterWrapper = styled(FooterWrapper)`
-  padding: 2em 1.2em;
+  padding: 2em 0;
 `;
 
 const PurpleButton = styled(ColorButton)`
@@ -44,14 +45,16 @@ export const TaskPage = () => {
         tasks={tasks}
       />
       <MainFooterWrapper>
-        <PurpleButton
-          size='large'
-          disableElevation
-          type="submit"
-          onClick={handleOpenModal}
-        >
-          ADD NEW TASK
-        </PurpleButton>
+        <Container>
+          <PurpleButton
+            size='large'
+            disableElevation
+            type="submit"
+            onClick={handleOpenModal}
+          >
+            ADD NEW TASK
+          </PurpleButton>
+        </Container>
       </MainFooterWrapper>
       <TaskDialog
         onSubmit={handleOnSubmit}
