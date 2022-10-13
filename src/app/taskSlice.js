@@ -26,24 +26,27 @@ export const tasksSlice = createSlice({
     },
     markAsDone: (state, action) => {
       const task = action.payload;
+      state.tasks = state.tasks.map(t => {
+        if (t.idx === task.idx) {
+          t.done = !t.done;
+        }
+        return t;
+      });
+      db.update(state.tasks, 'tasks');
+    },
+    removeTask: (state, action) => {
+      const task = action.payload;
       if (task.deleteOnComplete) {
         state.tasks = state.tasks.filter(t => {
           return t.idx !== task.idx;
         });
-      } else {
-        state.tasks = state.tasks.map(t => {
-          if (t.idx === task.idx) {
-            t.done = !t.done;
-          }
-          return t;
-        });
+        db.update(state.tasks, 'tasks');
       }
-      db.update(state.tasks, 'tasks');
-    },
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addTask, deleteAll, markAsDone } = tasksSlice.actions;
+export const { addTask, deleteAll, markAsDone, removeTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer

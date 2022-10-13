@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
-import { useState, memo } from 'react';
+import { useState } from 'react';
 import { HamburgerButton } from '../Buttons';
-import { Button } from '@mui/material';
 import styled from 'styled-components';
 import useSession from '../../hooks/sessionHook';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete, Add } from '@mui/icons-material';
+import { DeleteButton, AddButton } from '../Buttons';
 
 const BlackSide = styled.div`
   background-color: #23242A;
@@ -18,18 +17,6 @@ const BlackSide = styled.div`
   padding: ${({ sideOpen }) => sideOpen ? '100px 5px 0 5px' : '100px 0 0 0'};
   transition: all 0.5s ease;
 `;
-
-const SideMenuButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#F43E32 !important',
-  height: '2.3em',
-  width: '85%',
-  borderRadius: '15px !important',
-  color: 'white !important',
-  fontSize: '2em !important',
-  position: 'relative',
-  zIndex: 2,
-  boxShadow: '0px 3px 0px #000',
-}));
 
 const SideMenuWrapper = styled.div``;
 
@@ -54,7 +41,12 @@ export const SideMenu = () => {
     <SideMenuWrapper>
       <HamburgerButton open={sideOpen} onClick={handleToggleSideBar} />
       <BlackSide sideOpen={sideOpen}>
-        <SideMenuButton onClick={handleCleanSession}><DeleteIcon /></SideMenuButton>
+        <AddButton onClick={handleCleanSession}>
+          <Add />
+        </AddButton>
+        <DeleteButton onClick={handleCleanSession}>
+          <Delete />
+        </DeleteButton>
       </BlackSide>
     </SideMenuWrapper>
   )

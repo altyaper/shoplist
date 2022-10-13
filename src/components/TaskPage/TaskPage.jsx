@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
 
 const MainFooterWrapper = styled(FooterWrapper)`
-  padding: 1.2em;
+  padding: 2em 1.2em;
 `;
 
 const PurpleButton = styled(ColorButton)`
@@ -21,13 +21,17 @@ const TaskPageWrapper = styled.div`
 ;
 
 export const TaskPage = () => {
-  const {tasks, onAdd, onDelete, onDone} = useSession();
+  const {tasks, onAdd, onDone, onDelete} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
   
   const handleOnSubmit = (task) => onAdd(task);
   
-  
-  const handleMarkDone = idx => onDone(idx);
+  const handleMarkDone = task => {
+    onDone(task);
+    setTimeout(() => {
+      onDelete(task);
+    }, 1000);
+  };
 
   const handleCloseModal = () => setOpenDialog(false);
 

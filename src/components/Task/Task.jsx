@@ -39,15 +39,17 @@ const TaskDate = styled.span`
 
 const DoneLabel = styled.span`
   font-weight: 600;
+  transform: translateY(0px);
+  color: ${({ done }) => !!done ? 'white' : 'black'};
+  opacity: ${({ done }) => !!done ? '1' : '0'};
 `;
 
 export const Task = ({
   onMarkDone,
-  onRemove,
   task
 }) => {
 
-  const formatedDate = dayjs(task.createdAt).format('DD/MM/YYYY');
+  const formatedDate = dayjs(task.createdAt).format('DD MMM YYYY');
 
   return (
     <TaskWrapper done={task.done} variant="outlined">
@@ -63,11 +65,11 @@ export const Task = ({
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <TaskDate>{formatedDate}</TaskDate>
         </Grid>
-        <Grid item xs={4}>
-          {task.done && <DoneLabel>COMPLETED!</DoneLabel>}
+        <Grid item xs={5}>
+          <DoneLabel done={task.done}>COMPLETED!</DoneLabel>
         </Grid>
       </Grid>
     </TaskWrapper>
