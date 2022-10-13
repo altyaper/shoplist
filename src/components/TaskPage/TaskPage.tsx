@@ -5,7 +5,7 @@ import { Container } from '@mui/material';
 import useSession from '../../hooks/sessionHook';
 import Tasks from '../Task/Tasks';
 import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
-
+import { Task } from '../../models';
 
 
 const MainFooterWrapper = styled(FooterWrapper)`
@@ -30,9 +30,9 @@ export const TaskPage = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const { t } = useTranslation();
   
-  const handleOnSubmit = (task) => onAdd(task);
+  const handleOnSubmit = (task: Task) => onAdd(task);
   
-  const handleMarkDone = task => {
+  const handleMarkDone = (task: Task) => {
     onDone(task);
     setTimeout(() => {
       onDelete(task);

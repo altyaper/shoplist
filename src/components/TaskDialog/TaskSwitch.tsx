@@ -1,3 +1,4 @@
+import React, { ChangeEvent } from 'react';
 import { Grid, Switch } from '@mui/material';
 import styled from 'styled-components';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -21,11 +22,18 @@ const IconWrapper = styled.div`
   width: 4.2em;
 `;
 
+interface TaskSwitchProps {
+  onChange?: (e: ChangeEvent) => void;
+  name: string;
+  label: string;
+  value: boolean;
+}
+
 export const TaskSwitch = ({
   onChange,
   name,
   label
-}) => {
+}: TaskSwitchProps) => {
   return (
     <TaskOptionWrapper>
       <Grid alignItems="center" container spacing={2}>

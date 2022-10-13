@@ -1,6 +1,7 @@
+import React from 'react';
 import { TextField } from '@mui/material';
 
-export const TUTextField = (props) => {
+export const TUTextField = (props: any) => {
   return (
     <TextField
       autoFocus

@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { HamburgerButton } from '../Buttons';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import useSession from '../../hooks/sessionHook';
 import { Delete, Add } from '@mui/icons-material';
-import { DeleteButton, AddButton } from '../Buttons';
+import { DeleteButton, AddButton, HamburgerButton } from '../Buttons';
 import { useTranslation } from 'react-i18next';
+import { BlackSideProps } from '../../models';
 
-const BlackSide = styled.div`
+const BlackSide = styled.div<BlackSideProps>`
   background-color: #23242A;
   width: 100px;
   text-align: center;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Dialog, DialogContent, Container } from '@mui/material';
 import { Button } from '@mui/material';
 import { TUTextField, TUButton } from '../MUITheme';
@@ -8,6 +9,7 @@ import * as Yup from 'yup';
 import { ArrowBack } from '@mui/icons-material';
 import { TaskSwitch } from './TaskSwitch';
 import { useTranslation } from 'react-i18next';
+import { Task } from '../../models';
 
 const newTaskSchema = Yup.object().shape({
   text: Yup.string()
@@ -37,6 +39,10 @@ export const ColorButton = MUIStyled(Button)(({ theme }) => ({
   }
 }));
 
+interface TitleProps {
+  marginTop?: boolean;
+}
+
 export const FooterWrapper = styled.div`
   position: absolute;
   bottom: 0;
@@ -54,7 +60,7 @@ const ContentModal = styled.div`
   display: block;
 `;
 
-export const TitleModal = styled.h2`
+export const TitleModal = styled.h2<TitleProps>`
   font-size: 3em;
   font-weight: bold;
   line-height: 1.2em;
@@ -73,13 +79,19 @@ const CloseSection = styled.div`
 
 const DialogContentWrapper = styled(DialogContent)`
   padding: 1.2em;
-`
+`;
+
+interface TaskDialogProps {
+  open: boolean;
+  onSubmit: (task: Task) => void;
+  onCloseModal: () => void;
+}
 
 export const TaskDialog = ({
   open,
   onSubmit,
   onCloseModal
-}) => {
+}: TaskDialogProps) => {
   const { t } = useTranslation();
   return (
     <DialogWrapper
@@ -89,7 +101,13 @@ export const TaskDialog = ({
       <DialogContentWrapper>
         <Container>
           <Formik
-            initialValues={{ text: '',  deleteOnComplete: true }}
+            initialValues={{
+              idx: 0,
+              text: '',
+              createdAt: '',
+              done: false,
+              deleteOnComplete: true
+            }}
             validationSchema={newTaskSchema}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {

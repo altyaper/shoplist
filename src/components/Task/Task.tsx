@@ -1,9 +1,11 @@
+import React from 'react';
 import { Paper, Checkbox, Grid } from '@mui/material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
+import { TaskProps, FlagProps } from '../../models';
 import { useTranslation } from 'react-i18next';
 
-const TaskWrapper = styled(Paper)`
+const TaskWrapper = styled(Paper)<FlagProps>`
   border: 1px solid #E3E4E8;
   padding: 0.8em;
   border-radius: 15px;
@@ -13,7 +15,7 @@ const TaskWrapper = styled(Paper)`
     font-size: 2rem;
   }
 
-  ${(props) => props.done && (
+  ${({ done }) => done && (
     css`
       background-color: #A362EA !important;
       color: white !important;
@@ -37,7 +39,7 @@ const TaskDate = styled.span`
   font-weigth: 400;
 `;
 
-const DoneLabel = styled.span`
+const DoneLabel = styled.span<FlagProps>`
   font-weight: 600;
   text-transform: uppercase;
   transform: translateY(0px);
@@ -48,14 +50,14 @@ const DoneLabel = styled.span`
 export const Task = ({
   onMarkDone,
   task
-}) => {
+}: TaskProps) => {
   const { t } = useTranslation();
   const formatedDate = dayjs(task.createdAt).format('DD MMM YYYY');
 
   return (
     <TaskWrapper done={task.done} variant="outlined">
       <Grid container spacing={2} >
-        <Grid item xs={10} direction="row" alignItems="flex-end">
+        <Grid item xs={10}>
           <TaskText>{task.text}</TaskText>
         </Grid>
         <Grid item xs={2} style={{textAlign: 'right'}}>

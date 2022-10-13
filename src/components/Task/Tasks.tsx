@@ -1,9 +1,11 @@
+import React from 'react';
 import { Container } from "@mui/material";
 import styled from 'styled-components';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
+import { Task as TaskModel } from '../../models';
 import { TitleModal } from '../TaskDialog/TaskDialog';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -37,7 +39,12 @@ const TopWrapper = styled.div`
   }
 `;
 
-const Tasks = props => {
+interface TasksProps {
+  tasks: TaskModel[],
+  onMarkDone: (task: TaskModel) => void;
+}
+
+const Tasks = (props: TasksProps) => {
   const { tasks } = props;
   const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;

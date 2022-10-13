@@ -1,15 +1,16 @@
 import dayjs from 'dayjs'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../app/store';
 import { addTask, deleteAll, markAsDone, removeTask } from "../app/taskSlice";
+import { Task } from '../models';
 
 const useSession = () => {
-  const tasks = useSelector(state => state.tasks.tasks);
+  const tasks = useSelector((state) => state.tasks.tasks);
   const dispatch = useDispatch();
 
   const onAdd = ({
     text,
     deleteOnComplete,
-  }) => {
+  }: Task) => {
     const newTask = {
       idx: tasks.length,
       done: false,
@@ -25,11 +26,11 @@ const useSession = () => {
     dispatch(deleteAll())
   }
   
-  const onDone = (task) => {
+  const onDone = (task: Task) => {
     dispatch(markAsDone(task));
   }
 
-  const onDelete = (task) => {
+  const onDelete = (task: Task) => {
     dispatch(removeTask(task));
   }
 
