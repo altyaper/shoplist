@@ -1,15 +1,19 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import { Container } from '@mui/material';
 import useSession from '../../hooks/sessionHook';
 import Tasks from '../Task/Tasks';
-import styled from 'styled-components';
 import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
-import { Container } from '@mui/material';
+
+
 
 const MainFooterWrapper = styled(FooterWrapper)`
   padding: 2em 0;
 `;
 
 const PurpleButton = styled(ColorButton)`
+  text-transform: uppercase;
   &.MuiButtonBase-root {
     background-color: #A362EA;
   }
@@ -24,6 +28,7 @@ const TaskPageWrapper = styled.div`
 export const TaskPage = () => {
   const {tasks, onAdd, onDone, onDelete} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
+  const { t } = useTranslation();
   
   const handleOnSubmit = (task) => onAdd(task);
   
@@ -52,7 +57,7 @@ export const TaskPage = () => {
             type="submit"
             onClick={handleOpenModal}
           >
-            ADD NEW TASK
+            {t('add_task')}
           </PurpleButton>
         </Container>
       </MainFooterWrapper>

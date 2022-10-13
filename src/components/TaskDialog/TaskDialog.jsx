@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { ArrowBack } from '@mui/icons-material';
 import { TaskSwitch } from './TaskSwitch';
+import { useTranslation } from 'react-i18next';
 
 const newTaskSchema = Yup.object().shape({
   text: Yup.string()
@@ -79,6 +80,7 @@ export const TaskDialog = ({
   onSubmit,
   onCloseModal
 }) => {
+  const { t } = useTranslation();
   return (
     <DialogWrapper
       fullScreen
@@ -110,8 +112,7 @@ export const TaskDialog = ({
               <form onSubmit={handleSubmit}>
                 <HeaderModal>
                   <TitleModal marginTop>
-                    <div>Create</div>
-                    <div>New Task</div>
+                    {t('create_task_title')}
                   </TitleModal>
                   <CloseSection>
                     <TUButton size="large" onClick={onCloseModal}>
@@ -123,14 +124,14 @@ export const TaskDialog = ({
                   <TUTextField
                     error={hasError}
                     helperText={firstError}
-                    label="Task"
+                    label={t('task_label')}
                     name="text"
                     multiline
                     value={values.text}
                     onChange={handleChange}
                   />
                   <TaskSwitch
-                    label='Delete on complete'
+                    label={t('delete_on_complete_label')}
                     name='deleteOnComplete'
                     value={values.deleteOnComplete}
                     onChange={handleChange}

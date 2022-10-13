@@ -1,9 +1,10 @@
 import { Container } from "@mui/material";
-import { Task } from "./Task";
 import styled from 'styled-components';
-import { TitleModal } from '../TaskDialog/TaskDialog';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from "react-i18next";
+import { Task } from "./Task";
+import { TitleModal } from '../TaskDialog/TaskDialog';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -38,7 +39,7 @@ const TopWrapper = styled.div`
 
 const Tasks = props => {
   const { tasks } = props;
-
+  const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
 
@@ -57,7 +58,7 @@ const Tasks = props => {
     <Container>
       <TopWrapper>
         <TitleModal>
-          Tasks
+          {t("tasks_title")}
         </TitleModal>
         <ChartWrapper>
           {tasks && tasks.length > 0 && <Doughnut data={data} />}
@@ -68,7 +69,7 @@ const Tasks = props => {
           <Task key={idx} {...props} task={task} />
         ))}
         {!tasks.length && (
-          <Empty>NO TASKS YET</Empty>
+          <Empty>{t('empty_tasks')}</Empty>
         )}
       </TasksWrapper>
     </Container>

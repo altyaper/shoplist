@@ -1,6 +1,7 @@
 import { Paper, Checkbox, Grid } from '@mui/material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 const TaskWrapper = styled(Paper)`
   border: 1px solid #E3E4E8;
@@ -22,7 +23,6 @@ const TaskWrapper = styled(Paper)`
       }
     `
   )}
-
 `;
 
 const TaskText = styled.p`
@@ -39,6 +39,7 @@ const TaskDate = styled.span`
 
 const DoneLabel = styled.span`
   font-weight: 600;
+  text-transform: uppercase;
   transform: translateY(0px);
   color: ${({ done }) => !!done ? 'white' : 'black'};
   opacity: ${({ done }) => !!done ? '1' : '0'};
@@ -48,7 +49,7 @@ export const Task = ({
   onMarkDone,
   task
 }) => {
-
+  const { t } = useTranslation();
   const formatedDate = dayjs(task.createdAt).format('DD MMM YYYY');
 
   return (
@@ -72,7 +73,7 @@ export const Task = ({
         </Grid>
         <Grid item xs={5}>
           <Grid container justifyContent="flex-end">
-            <DoneLabel done={task.done}>COMPLETED!</DoneLabel>
+            <DoneLabel done={task.done}>{t('completed_task')}</DoneLabel>
           </Grid>
         </Grid>
       </Grid>

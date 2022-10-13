@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useSession from '../../hooks/sessionHook';
 import { Delete, Add } from '@mui/icons-material';
 import { DeleteButton, AddButton } from '../Buttons';
+import { useTranslation } from 'react-i18next';
 
 const BlackSide = styled.div`
   background-color: #23242A;
@@ -21,7 +22,7 @@ const BlackSide = styled.div`
 const SideMenuWrapper = styled.div``;
 
 export const SideMenu = () => {
-
+  const { t } = useTranslation();
   const { onDeleteAll } = useSession();
   const [sideOpen, setSideOpen] = useState(false);
 
@@ -31,7 +32,7 @@ export const SideMenu = () => {
 
   const handleCleanSession = () => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Are you sure you want to delete this session?')) {
+    if (confirm(t('delete_confirm_message'))) {
       onDeleteAll();
       setSideOpen(false);
     }
