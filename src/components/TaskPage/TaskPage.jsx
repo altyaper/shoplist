@@ -21,13 +21,11 @@ const TaskPageWrapper = styled.div`
 ;
 
 export const TaskPage = () => {
-
   const {tasks, onAdd, onDelete, onDone} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
   
   const handleOnSubmit = (task) => onAdd(task);
   
-  const handleRemoveTask = idx => onDelete(idx);
   
   const handleMarkDone = idx => onDone(idx);
 
@@ -38,7 +36,6 @@ export const TaskPage = () => {
   return (
     <TaskPageWrapper>
       <Tasks
-        onRemove={handleRemoveTask}
         onMarkDone={handleMarkDone}
         tasks={tasks}
       />
