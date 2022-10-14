@@ -5,9 +5,7 @@ import { styled as MUIStyled } from '@mui/material/styles';
 import { HamburgerButtonProps } from '../../models';
 
 const HamburgerButtonWrapper = MUIStyled(Button)<HamburgerButtonProps>(() => ({
-  position: 'absolute',
   zIndex: 2,
-  right: '0px',
   display: 'flex',
   flexDirection: 'column',
   textAlign: 'right'
@@ -21,22 +19,19 @@ const Line = styled.span<HamburgerButtonProps>`
   transition: all 0.5s ease;
   
 
-  ${({ lineSize, open }) => {
+  ${({ lineSize }) => {
     switch(lineSize) {
       case 's':
         return css`
           width: 20px;
-          transform: translateX(${() => open ? '-17px' : '10px' });
         `;
       case 'm':
         return css`
           width: 25px;
-          transform: translateX(${() => open ? '-17px' : '8px' });
         `;
       case 'l':
         return css`
           width: 30px;
-          transform: translateX(${() => open ? '-17px' : '6px' });
         `;
       default:
     }

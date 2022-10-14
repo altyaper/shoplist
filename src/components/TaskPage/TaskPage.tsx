@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { Container } from '@mui/material';
 import useSession from '../../hooks/sessionHook';
 import Tasks from '../Task/Tasks';
 import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
 import { Task } from '../../models';
-
+import { Container } from '@mui/material';
 
 const MainFooterWrapper = styled(FooterWrapper)`
   padding: 2em 0;
@@ -36,7 +35,7 @@ export const TaskPage = () => {
     onDone(task);
     setTimeout(() => {
       onDelete(task);
-    }, 1000);
+    }, 500);
   };
 
   const handleCloseModal = () => setOpenDialog(false);

@@ -33,7 +33,7 @@ const ChartWrapper = styled.div`
 const TopWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding-top: 2em;
+  margin-bottom: 1.2em;
   h2 {
     margin-right: auto;
   }

@@ -10,7 +10,6 @@ export const BaseButton = styled(Button)(({ theme }) => ({
   position: 'relative',
   zIndex: 2,
   boxShadow: '0px 3px 0px #000',
-  marginBottom: '0.8em',
 }));
 
 export const DeleteButton = styled(BaseButton)(({ theme }) => ({

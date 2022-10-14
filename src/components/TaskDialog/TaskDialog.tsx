@@ -44,7 +44,7 @@ interface TitleProps {
 }
 
 export const FooterWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -65,7 +65,7 @@ export const TitleModal = styled.h2<TitleProps>`
   font-weight: bold;
   line-height: 1.2em;
   margin-top: ${({ marginTop }) => marginTop ? '1.4em' : '0em'};
-  padding-top: ${({ marginTop }) => marginTop ? '0' : '50px' };
+  margin-bottom: ${({ marginTop }) => marginTop ? '1.4em' : '0em'};;
 `;
 
 const CloseSection = styled.div`
