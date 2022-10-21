@@ -22,5 +22,5 @@ export interface TaskProps {
 }
 
 export interface FlagProps {
-  done?: boolean;
+  done: boolean;
 }

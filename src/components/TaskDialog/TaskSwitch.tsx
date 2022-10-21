@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { Grid, Switch } from '@mui/material';
+import { Grid, Switch, Typography } from '@mui/material';
 import styled from 'styled-components';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -43,7 +43,7 @@ export const TaskSwitch = ({
           </IconWrapper>
         </Grid>
         <Grid item xs={6}>
-          {label}
+          <Typography variant='body1'>{label}</Typography>
         </Grid>
         <Grid item xs={3}>
           <Switch

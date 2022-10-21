@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Checkbox, Grid } from '@mui/material';
+import { Paper, Checkbox, Grid, Typography } from '@mui/material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { TaskProps, FlagProps } from '../../models';
@@ -28,9 +28,6 @@ const TaskWrapper = styled(Paper)<FlagProps>`
 `;
 
 const TaskText = styled.p`
-  font-size: 1.2em;
-  line-height: 1.6em;
-  font-weight: 600;
   margin: 0;
   margin-bottom: 0.8em;
 `;
@@ -40,7 +37,6 @@ const TaskDate = styled.span`
 `;
 
 const DoneLabel = styled.span<FlagProps>`
-  font-weight: 600;
   text-transform: uppercase;
   transform: translateY(0px);
   color: ${({ done }) => !!done ? 'white' : 'black'};
@@ -58,7 +54,11 @@ export const Task = ({
     <TaskWrapper done={task.done} variant="outlined">
       <Grid container spacing={2} >
         <Grid item xs={10}>
-          <TaskText>{task.text}</TaskText>
+          <TaskText>
+            <Typography variant='body1'>
+              {task.text}
+            </Typography>
+          </TaskText>
         </Grid>
         <Grid item xs={2} style={{textAlign: 'right'}}>
           <Grid container justifyContent="flex-end">
@@ -75,7 +75,9 @@ export const Task = ({
         </Grid>
         <Grid item xs={5}>
           <Grid container justifyContent="flex-end">
-            <DoneLabel done={task.done}>{t('completed_task')}</DoneLabel>
+            <Typography variant='body1'>
+              <DoneLabel done={task.done}>{t('completed_task')}</DoneLabel>
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

@@ -1,10 +1,11 @@
 import dayjs from 'dayjs'
-import { useDispatch, useSelector } from '../app/store';
-import { addTask, deleteAll, markAsDone, removeTask } from "../app/taskSlice";
-import { Task } from '../models';
+import { useDispatch, useSelector } from '../store';
+import { addTask, deleteAll, markAsDone, removeTask } from "../slices/taskSlice";
+import { getTasksSelector } from '../selectors/tasksSelectors';
+import { Task } from '../../models';
 
 const useSession = () => {
-  const tasks = useSelector((state) => state.tasks.tasks);
+  const tasks = useSelector(getTasksSelector);
   const dispatch = useDispatch();
 
   const onAdd = ({

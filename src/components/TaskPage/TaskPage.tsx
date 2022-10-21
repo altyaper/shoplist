@@ -1,21 +1,15 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import useSession from '../../hooks/sessionHook';
+import useSession from '../../app/hooks/sessionHook';
 import Tasks from '../Task/Tasks';
-import TaskDialog, { ColorButton, FooterWrapper } from '../TaskDialog/TaskDialog';
+import TaskDialog, { FooterWrapper } from '../TaskDialog/TaskDialog';
 import { Task } from '../../models';
-import { Container } from '@mui/material';
+import { Container, Button } from '@mui/material';
+import { useSelector } from '../../app/store';
 
 const MainFooterWrapper = styled(FooterWrapper)`
   padding: 2em 0;
-`;
-
-const PurpleButton = styled(ColorButton)`
-  text-transform: uppercase;
-  &.MuiButtonBase-root {
-    background-color: #A362EA;
-  }
 `;
 
 const TaskPageWrapper = styled.div`
@@ -25,7 +19,8 @@ const TaskPageWrapper = styled.div`
 ;
 
 export const TaskPage = () => {
-  const {tasks, onAdd, onDone, onDelete} = useSession();
+  const tasks = useSelector(state => state.tasks.tasksList);
+  const {onAdd, onDone, onDelete} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
   const { t } = useTranslation();
   
@@ -50,14 +45,15 @@ export const TaskPage = () => {
       />
       <MainFooterWrapper>
         <Container>
-          <PurpleButton
+          <Button
             size='large'
+            variant='contained'
             disableElevation
             type="submit"
             onClick={handleOpenModal}
           >
             {t('add_task')}
-          </PurpleButton>
+          </Button>
         </Container>
       </MainFooterWrapper>
       <TaskDialog

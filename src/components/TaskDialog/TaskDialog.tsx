@@ -1,8 +1,6 @@
 import React from 'react';
-import { Dialog, DialogContent, Container } from '@mui/material';
-import { Button } from '@mui/material';
+import { Button, Dialog, DialogContent, Container, Typography } from '@mui/material';
 import { TUTextField, TUButton } from '../MUITheme';
-import { styled as MUIStyled } from '@mui/material/styles';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -10,6 +8,7 @@ import { ArrowBack } from '@mui/icons-material';
 import { TaskSwitch } from './TaskSwitch';
 import { useTranslation } from 'react-i18next';
 import { Task } from '../../models';
+
 
 const newTaskSchema = Yup.object().shape({
   text: Yup.string()
@@ -23,25 +22,6 @@ const DialogWrapper = styled(Dialog)`
     position: relative;
   }
 `;
-
-export const ColorButton = MUIStyled(Button)(({ theme }) => ({
-  color: 'white',
-  backgroundColor: '#23242A',
-  textAlign: 'center',
-  width: '100%',
-  borderRadius: '10px',
-  fontSize: '1.2em',
-  '&:hover': {
-    backgroundColor: '#23242A'
-  },
-  ':disabled': {
-    backgroundColor: '#E3E4E8'
-  }
-}));
-
-interface TitleProps {
-  marginTop?: boolean;
-}
 
 export const FooterWrapper = styled.div`
   position: fixed;
@@ -60,12 +40,9 @@ const ContentModal = styled.div`
   display: block;
 `;
 
-export const TitleModal = styled.h2<TitleProps>`
-  font-size: 3em;
-  font-weight: bold;
-  line-height: 1.2em;
-  margin-top: ${({ marginTop }) => marginTop ? '1.4em' : '0em'};
-  margin-bottom: ${({ marginTop }) => marginTop ? '1.4em' : '0em'};;
+const TitleModal = styled(Typography)`
+  padding-top: 1.4em;
+  padding-bottom: 1.4em;
 `;
 
 const CloseSection = styled.div`
@@ -129,7 +106,7 @@ export const TaskDialog = ({
             return (
               <form onSubmit={handleSubmit}>
                 <HeaderModal>
-                  <TitleModal marginTop>
+                  <TitleModal variant='h2'>
                     {t('create_task_title')}
                   </TitleModal>
                   <CloseSection>
@@ -156,14 +133,15 @@ export const TaskDialog = ({
                   />
                 </ContentModal>
                 <FooterWrapper>
-                  <ColorButton
+                  <Button
                     size='large'
                     disableElevation
+                    variant='contained'
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    CREATE TASK
-                  </ColorButton>
+                    {t('create_task')}
+                  </Button>
                 </FooterWrapper>
               </form>
             )

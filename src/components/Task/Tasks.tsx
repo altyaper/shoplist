@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import styled from 'styled-components';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
 import { Task as TaskModel } from '../../models';
-import { TitleModal } from '../TaskDialog/TaskDialog';
+import { palette } from '../../themes/colors';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,8 +18,8 @@ const TasksWrapper = styled.ul`
 
 const Empty = styled.div`
   text-align: center;
-  color: #31343E;
-  background-color: #E3E4E8;
+  color: ${palette['charcoal']};
+  background-color: ${palette['gray-3']};
   padding: 2em;
   font-size: 1.4em;
   border-radius: 15px;
@@ -49,13 +49,14 @@ const Tasks = (props: TasksProps) => {
   const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
-
+  
+  
   const data = {
     datasets: [
       {
         data: [complete, incomplete],
-        backgroundColor: ['#A362EA', '#F4A921'],
-        borderColor: ['#A362EA', '#F4A921'],
+        backgroundColor: [palette['purpure-1'], palette['amber-1']],
+        borderColor: [palette['purpure-2'], palette['amber-2']],
         borderWidth: 1,
       },
     ],
@@ -64,9 +65,9 @@ const Tasks = (props: TasksProps) => {
   return (
     <Container>
       <TopWrapper>
-        <TitleModal>
+        <Typography variant='h2'>
           {t("tasks_title")}
-        </TitleModal>
+        </Typography>
         <ChartWrapper>
           {tasks && tasks.length > 0 && <Doughnut data={data} />}
         </ChartWrapper>
@@ -76,7 +77,11 @@ const Tasks = (props: TasksProps) => {
           <Task key={idx} {...props} task={task} />
         ))}
         {!tasks.length && (
-          <Empty>{t('empty_tasks')}</Empty>
+          <Empty>
+            <Typography variant='h5'>
+              {t('empty_tasks')}
+            </Typography>
+          </Empty>
         )}
       </TasksWrapper>
     </Container>

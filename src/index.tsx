@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider } from "@mui/material";
+import { theme } from './themes/theme';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
@@ -10,7 +12,9 @@ import './app/i18n';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

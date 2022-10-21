@@ -3,7 +3,7 @@ import LocalStorageDB from 'local-storage-db';
 const db = new LocalStorageDB('todo');
 
 const initialState = {
-  tasks: db.get('tasks') || [],
+  tasksList: db.get('tasks') || [],
 }
 
 export const tasksSlice = createSlice({
@@ -18,33 +18,34 @@ export const tasksSlice = createSlice({
       } else {
         db.create('tasks', [payload]);
       }
-      state.tasks.push(payload);
+      state.tasksList.push(payload);
     },
     deleteAll: (state) => {
       db.remove('tasks');
-      state.tasks = [];
+      state.tasksList = [];
     },
     markAsDone: (state, action) => {
       const task = action.payload;
-      state.tasks = state.tasks.map(t => {
+      state.tasksList = state.tasksList.map(t => {
         if (t.idx === task.idx) {
           t.done = !t.done;
         }
         return t;
       });
-      db.update(state.tasks, 'tasks');
+      console.log(state.tasksList);
+      db.update(state.tasksList, 'tasks');
     },
     removeTask: (state, action) => {
       const task = action.payload;
       if (task.deleteOnComplete) {
-        state.tasks = state.tasks.filter(t => {
+        state.tasksList = state.tasksList.filter(t => {
           return t.idx !== task.idx;
         });
-        db.update(state.tasks, 'tasks');
+        db.update(state.tasksList, 'tasks');
       }
     }
   },
-})
+});
 
 // Action creators are generated for each case reducer function
 export const { addTask, deleteAll, markAsDone, removeTask } = tasksSlice.actions;

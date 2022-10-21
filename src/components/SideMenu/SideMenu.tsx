@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useSession from '../../hooks/sessionHook';
+import useSession from '../../app/hooks/sessionHook';
 import { Delete, Add } from '@mui/icons-material';
 import { DeleteButton, AddButton, HamburgerButton } from '../Buttons';
 import { useTranslation } from 'react-i18next';

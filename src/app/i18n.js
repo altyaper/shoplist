@@ -16,6 +16,7 @@ const resources = {
       create_task_title: 'Create new task',
       empty_tasks: 'NO TASKS YET',
       delete_on_complete_label: 'Delete on complete',
+      create_task: 'CREATE TASK',
     }
   },
   'es-MX': {
@@ -28,6 +29,7 @@ const resources = {
       create_task_title: 'Crear nueva tarea',
       empty_tasks: 'NO HAY TAREAS',
       delete_on_complete_label: 'Eliminar al completar',
+      create_task: 'CREAR TAREA',
     }
   },
 };
