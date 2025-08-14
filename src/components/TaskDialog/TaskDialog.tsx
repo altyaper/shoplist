@@ -133,15 +133,19 @@ export const TaskDialog = ({
                   />
                 </ContentModal>
                 <FooterWrapper>
-                  <Button
-                    size='large'
-                    disableElevation
-                    variant='contained'
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    {t('create_task')}
-                  </Button>
+                  <Container>
+                    <Button
+                      size='large'
+                      disableElevation
+                      variant='contained'
+                      fullWidth
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      {t('create_task')}
+                    </Button>
+
+                  </Container>
                 </FooterWrapper>
               </form>
             )
