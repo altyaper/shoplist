@@ -8,28 +8,28 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 const resources = {
   'en-US': {
     translation: {
-      task_label: 'Task',
-      add_task: 'Add new Task',
-      tasks_title: 'Tasks',
-      completed_task: 'Completed!',
-      delete_confirm_message: 'Are you sure you want to delete all the tasks?',
-      create_task_title: 'Create new task',
-      empty_tasks: 'NO TASKS YET',
-      delete_on_complete_label: 'Delete on complete',
-      create_task: 'CREATE TASK',
+      task_label: 'Item',
+      add_task: 'Add new item',
+      tasks_title: 'Shopping List',
+      completed_task: 'Picked!',
+      delete_confirm_message: 'Are you sure you want to delete all the items?',
+      create_task_title: 'Create new item',
+      empty_tasks: 'NO ITEMS  YET',
+      delete_on_complete_label: 'Delete on picked',
+      create_task: 'ADD ITEM',
     }
   },
   'es-MX': {
     translation: {
-      task_label: 'Tarea',
-      add_task: 'Agregar nueva tarea',
-      tasks_title: 'Tareas',
-      completed_task: 'Completada!',
-      delete_confirm_message: 'Estas seguro que quieres eliminar todas las tareas?',
-      create_task_title: 'Crear nueva tarea',
-      empty_tasks: 'NO HAY TAREAS',
-      delete_on_complete_label: 'Eliminar al completar',
-      create_task: 'CREAR TAREA',
+      task_label: 'Artículo',
+      add_task: 'Agregar nuevo artículo',
+      tasks_title: 'Lista de compras',
+      completed_task: '¡Agarrado!',
+      delete_confirm_message: '¿Estás seguro que quieres eliminar todos los artículos?',
+      create_task_title: 'Agregar nuevo artículo',
+      empty_tasks: 'NO HAY ARTÍCULOS',
+      delete_on_complete_label: 'Eliminar al agarrar',
+      create_task: 'AGREGAR ARTÍCULO',
     }
   },
 };
