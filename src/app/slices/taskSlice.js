@@ -32,7 +32,6 @@ export const tasksSlice = createSlice({
         }
         return t;
       });
-      console.log(state.tasksList);
       db.update(state.tasksList, 'tasks');
     },
     removeTask: (state, action) => {

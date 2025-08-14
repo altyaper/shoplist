@@ -50,6 +50,7 @@ export const TaskPage = () => {
             variant='contained'
             disableElevation
             type="submit"
+            fullWidth
             onClick={handleOpenModal}
           >
             {t('add_task')}

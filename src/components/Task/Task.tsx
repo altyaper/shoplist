@@ -76,7 +76,7 @@ export const Task = ({
         <Grid item xs={5}>
           <Grid container justifyContent="flex-end">
             <Typography variant='body1'>
-              <DoneLabel done={task.done}>{t('completed_task')}</DoneLabel>
+              <DoneLabel done={task.done}>{String(t('completed_task'))}</DoneLabel>
             </Typography>
           </Grid>
         </Grid>

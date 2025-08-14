@@ -1,4 +1,4 @@
-interface Color {
+export interface Color {
   hex: string;
 }
 
