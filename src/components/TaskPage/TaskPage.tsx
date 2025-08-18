@@ -28,9 +28,6 @@ export const TaskPage = () => {
   
   const handleMarkDone = (task: Task) => {
     onDone(task);
-    setTimeout(() => {
-      onDelete(task);
-    }, 500);
   };
 
   const handleCloseModal = () => setOpenDialog(false);

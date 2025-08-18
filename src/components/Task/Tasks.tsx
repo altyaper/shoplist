@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { Container, Typography, Button, Stack, Chip, Menu, MenuItem } from "@mui/material";
+import { Container, Typography, Button, Stack, Chip, Menu, MenuItem, IconButton } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import styled from 'styled-components';
@@ -64,6 +65,7 @@ const Tasks = (props: TasksProps) => {
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
   const galleryInputRef = useRef<HTMLInputElement | null>(null);
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
   const isMenuOpen = Boolean(menuAnchorEl);
   
   
@@ -117,9 +119,7 @@ const Tasks = (props: TasksProps) => {
   return (
     <Container>
       <TopWrapper>
-        <Typography variant='h2'>
-          {t("tasks_title")}
-        </Typography>
+       
         <input
           ref={cameraInputRef}
           type="file"
@@ -135,7 +135,7 @@ const Tasks = (props: TasksProps) => {
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-        <Stack direction="row" spacing={1} alignItems="center">
+        {/* <Stack direction="row" spacing={1} alignItems="center">
           <SnapButton
             variant="contained"
             size="large"
@@ -169,15 +169,45 @@ const Tasks = (props: TasksProps) => {
               ))}
             </Stack>
           )}
-        </Stack>
+        </Stack> */}
         <ChartWrapper>
           {tasks && tasks.length > 0 && <Doughnut data={data} />}
         </ChartWrapper>
       </TopWrapper>
       <TasksWrapper className="list">
-        { tasks && tasks.map((task, idx) => (
-          <Task key={idx} {...props} task={task} />
-        ))}
+        {/* Incomplete Tasks */}
+        {incomplete > 0 && (
+          <>
+            <Typography variant='h6' style={{ marginBottom: '1rem', color: palette['charcoal'] }}>
+              {t("tasks_title")} ({incomplete})
+            </Typography>
+            {tasks.filter(task => !task.done).map((task, idx) => (
+              <Task key={`incomplete-${idx}`} {...props} task={task} />
+            ))}
+          </>
+        )}
+        
+        {/* Completed Tasks */}
+        {complete > 0 && (
+          <>
+            <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
+              <Typography variant='h6' style={{ color: palette['purpure-1'] }}>
+                Completed ({complete})
+              </Typography>
+              <IconButton
+                size="small"
+                onClick={() => setCompletedSectionCollapsed(!completedSectionCollapsed)}
+                style={{ color: palette['purpure-1'] }}
+              >
+                {completedSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+              </IconButton>
+            </Stack>
+            {!completedSectionCollapsed && tasks.filter(task => task.done).map((task, idx) => (
+              <Task key={`complete-${idx}`} {...props} task={task} />
+            ))}
+          </>
+        )}
+        
         {!tasks.length && (
           <Empty>
             <Typography variant='h5'>

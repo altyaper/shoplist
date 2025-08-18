@@ -1,35 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Paper, Checkbox, Grid, Typography } from '@mui/material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { TaskProps, FlagProps } from '../../models';
 import { useTranslation } from 'react-i18next';
+
+dayjs.extend(relativeTime);
 
 const TaskWrapper = styled(Paper)<FlagProps>`
   border: 1px solid #E3E4E8;
   padding: 0.8em;
   border-radius: 15px;
   margin-bottom: 20px;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
 
   .MuiSvgIcon-root {
     font-size: 2rem;
   }
-
-  ${({ done }) => done && (
-    css`
-      background-color: #A362EA !important;
-      color: white !important;
-
-      .Mui-checked {
-        color: white !important;
-      }
-    `
-  )}
 `;
 
-const TaskText = styled.p`
+const TaskText = styled.p<FlagProps>`
   margin: 0;
   margin-bottom: 0.8em;
+  text-decoration: ${({ done }) => done ? 'line-through' : 'none'};
+  color: ${({ done }) => done ? '#9e9e9e' : 'inherit'};
+`;
+
+const FadingTaskWrapper = styled(TaskWrapper)<{ isFading: boolean }>`
+  ${({ isFading }) => isFading && css`
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+  `}
+`;
+
+
+
+const RelativeTimeLabel = styled.span<FlagProps>`
+  font-size: 0.75rem;
+  color: ${({ done }) => done ? '#9e9e9e' : '#9e9e9e'};
+  font-weight: 400;
+  display: block;
+  margin-top: 0.3em;
 `;
 
 const TaskDate = styled.span`
@@ -48,40 +63,41 @@ export const Task = ({
   task
 }: TaskProps) => {
   const { t } = useTranslation();
+  const [isFading, setIsFading] = useState(false);
   const formatedDate = dayjs(task.createdAt).format('DD MMM YYYY');
 
+  const handleCheckboxChange = () => {
+    if (!task.done) {
+      setIsFading(true);
+      setTimeout(() => {
+        onMarkDone(task);
+      }, 50);
+    } else {
+      onMarkDone(task);
+    }
+  };
+
   return (
-    <TaskWrapper done={task.done} variant="outlined">
-      <Grid container spacing={2} >
-        <Grid item xs={10}>
-          <TaskText>
+    <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={1}>
+          <Checkbox
+            onChange={handleCheckboxChange}
+            checked={task.done}
+          />
+        </Grid>
+        <Grid item xs={11}>
+          <TaskText done={task.done}>
             <Typography variant='body1'>
               {task.text}
             </Typography>
+            <RelativeTimeLabel done={task.done}>
+              Added {dayjs(task.createdAt).fromNow()}
+            </RelativeTimeLabel>
           </TaskText>
         </Grid>
-        <Grid item xs={2} style={{textAlign: 'right'}}>
-          <Grid container justifyContent="flex-end">
-            <Checkbox
-              onChange={() => onMarkDone(task)}
-              checked={task.done}
-            />
-          </Grid>
-        </Grid>
       </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={7}>
-          <TaskDate>{formatedDate}</TaskDate>
-        </Grid>
-        <Grid item xs={5}>
-          <Grid container justifyContent="flex-end">
-            <Typography variant='body1'>
-              <DoneLabel done={task.done}>{String(t('completed_task'))}</DoneLabel>
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </TaskWrapper>
+    </FadingTaskWrapper>
   );
 }
 
