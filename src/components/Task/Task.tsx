@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { TaskProps, FlagProps } from '../../models';
-import { useTranslation } from 'react-i18next';
 
 dayjs.extend(relativeTime);
 
@@ -48,24 +47,11 @@ const RelativeTimeLabel = styled.span<FlagProps>`
   margin-top: 0.3em;
 `;
 
-const TaskDate = styled.span`
-  font-weigth: 400;
-`;
-
-const DoneLabel = styled.span<FlagProps>`
-  text-transform: uppercase;
-  transform: translateY(0px);
-  color: ${({ done }) => !!done ? 'white' : 'black'};
-  opacity: ${({ done }) => !!done ? '1' : '0'};
-`;
-
 export const Task = ({
   onMarkDone,
   task
 }: TaskProps) => {
-  const { t } = useTranslation();
   const [isFading, setIsFading] = useState(false);
-  const formatedDate = dayjs(task.createdAt).format('DD MMM YYYY');
 
   const handleCheckboxChange = () => {
     if (!task.done) {
