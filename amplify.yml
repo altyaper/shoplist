@@ -14,5 +14,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-  build:
-    image: node:22
