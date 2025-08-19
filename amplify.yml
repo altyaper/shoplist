@@ -8,9 +8,11 @@ frontend:
       commands:
         - yarn run build
   artifacts:
-    baseDirectory: build
+    baseDirectory: dist
     files:
       - '**/*'
   cache:
     paths:
       - node_modules/**/*
+  build:
+    image: node:22
