@@ -81,13 +81,13 @@ export const Task = ({
   return (
     <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={2}>
+        <Grid item xs={2} md={1}>
           <Checkbox
             onChange={handleCheckboxChange}
             checked={task.done}
           />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={10} md={11}>
           <TaskText done={task.done}>
             <Typography variant='body1'>
               {task.text}
