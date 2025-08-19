@@ -7,6 +7,7 @@ import TaskDialog, { FooterWrapper } from '../TaskDialog/TaskDialog';
 import { Task } from '../../models';
 import { Container, Button } from '@mui/material';
 import { useSelector } from '../../app/store';
+import { getTasksSelector } from '../../app/selectors/tasksSelectors';
 
 const MainFooterWrapper = styled(FooterWrapper)`
   padding: 2em 0;
@@ -19,8 +20,8 @@ const TaskPageWrapper = styled.div`
 ;
 
 export const TaskPage = () => {
-  const tasks = useSelector(state => state.tasks.tasksList);
-  const {onAdd, onDone, onDelete} = useSession();
+  const tasks = useSelector(getTasksSelector);
+  const {onAdd, onDone} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
   const { t } = useTranslation();
   

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Dialog, DialogContent, Container, Typography } from '@mui/material';
 import { TUTextField, TUButton } from '../MUITheme';
 import styled from 'styled-components';

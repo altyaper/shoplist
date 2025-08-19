@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { Container, Typography, Button, Stack, Chip, Menu, MenuItem, IconButton } from "@mui/material";
+import { useState } from 'react';
+import { Container, Typography, Stack, IconButton } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
+// import CameraAltIcon from '@mui/icons-material/CameraAlt';
+// import UploadFileIcon from '@mui/icons-material/UploadFile';
 import styled from 'styled-components';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -44,12 +44,12 @@ const TopWrapper = styled.div`
   }
 `;
 
-const SnapButton = styled(Button)`
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 12px 16px;
-  border-radius: 12px;
-`;
+// const SnapButton = styled(Button)`
+//   font-weight: 700;
+//   font-size: 1rem;
+//   padding: 12px 16px;
+//   border-radius: 12px;
+// `;
 
 interface TasksProps {
   tasks: TaskModel[],
@@ -61,12 +61,12 @@ const Tasks = (props: TasksProps) => {
   const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
-  const [detectedItems, setDetectedItems] = useState<string[]>([]);
-  const cameraInputRef = useRef<HTMLInputElement | null>(null);
-  const galleryInputRef = useRef<HTMLInputElement | null>(null);
-  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  // const [detectedItems, setDetectedItems] = useState<string[]>([]);
+  // const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  // const galleryInputRef = useRef<HTMLInputElement | null>(null);
+  // const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
-  const isMenuOpen = Boolean(menuAnchorEl);
+  // const isMenuOpen = Boolean(menuAnchorEl);
   
   
   const data = {
@@ -80,47 +80,47 @@ const Tasks = (props: TasksProps) => {
     ],
   };
 
-  const handleOpenCamera = () => {
-    cameraInputRef.current?.click();
-  };
+  // const handleOpenCamera = () => {
+  //   cameraInputRef.current?.click();
+  // };
 
-  const handleOpenGallery = () => {
-    galleryInputRef.current?.click();
-  };
+  // const handleOpenGallery = () => {
+  //   galleryInputRef.current?.click();
+  // };
 
-  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setMenuAnchorEl(event.currentTarget);
-  };
+  // const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   setMenuAnchorEl(event.currentTarget);
+  // };
 
-  const handleCloseMenu = () => {
-    setMenuAnchorEl(null);
-  };
+  // const handleCloseMenu = () => {
+  //   setMenuAnchorEl(null);
+  // };
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const response = await fetch('http://localhost:9000', {
-        method: 'POST',
-        body: formData,
-      });
-      const json = await response.json();
-      const items = Array.isArray(json) ? json : (Array.isArray(json?.items) ? json.items : []);
-      setDetectedItems(items.map((it: any) => String(it)));
-    } catch (err) {
-      setDetectedItems([]);
-    } finally {
-      event.target.value = '';
-    }
-  };
+  // const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files && event.target.files[0];
+  //   if (!file) return;
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  //     const response = await fetch('http://localhost:9000', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
+  //     const json = await response.json();
+  //     const items = Array.isArray(json) ? json : (Array.isArray(json?.items) ? json.items : []);
+  //     setDetectedItems(items.map((it: any) => String(it)));
+  //   } catch (err) {
+  //     setDetectedItems([]);
+  //   } finally {
+  //     event.target.value = '';
+  //   }
+  // };
 
   return (
     <Container>
       <TopWrapper>
        
-        <input
+        {/* <input
           ref={cameraInputRef}
           type="file"
           accept="image/*"
@@ -134,7 +134,7 @@ const Tasks = (props: TasksProps) => {
           accept="image/*"
           onChange={handleFileChange}
           style={{ display: 'none' }}
-        />
+        /> */}
         {/* <Stack direction="row" spacing={1} alignItems="center">
           <SnapButton
             variant="contained"

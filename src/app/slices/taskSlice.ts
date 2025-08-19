@@ -26,7 +26,7 @@ export const tasksSlice = createSlice({
     },
     markAsDone: (state, action) => {
       const task = action.payload;
-      state.tasksList = state.tasksList.map(t => {
+      state.tasksList = state.tasksList.map((t: { idx: any; done: boolean; }) => {
         if (t.idx === task.idx) {
           t.done = !t.done;
         }
@@ -37,7 +37,7 @@ export const tasksSlice = createSlice({
     removeTask: (state, action) => {
       const task = action.payload;
       if (task.deleteOnComplete) {
-        state.tasksList = state.tasksList.filter(t => {
+        state.tasksList = state.tasksList.filter((t: { idx: any; }) => {
           return t.idx !== task.idx;
         });
         db.update(state.tasksList, 'tasks');

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from '../store';
-import { addTask, deleteAll, markAsDone, removeTask } from "../slices/taskSlice";
+import { addTask, deleteAll, markAsDone, removeTask } from "../slices/taskSlice.js";
 import { getTasksSelector } from '../selectors/tasksSelectors';
 import { Task } from '../../models';
 

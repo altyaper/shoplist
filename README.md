@@ -1,14 +1,10 @@
-## Todo-Challenge for Streams
+## Shoplist
 
-This is just a simple web app that you can insert into your streams for doing a todo challenge of the stream, I normally use it with Fortnite, where I set a couple challenges so my viewers can know what I'm doing as challenges for the stream.
+Never forget what you need at the store again! 🛒✨
 
-![alt text](public/screenshot1.png "Logo Title Text 1")
-
-What I do is to cut the input and delete button from the screen.
 
 ![alt text](public/screenshot.png "Logo Title Text 1")
 
-Remember that on OBS you can interact with the web page by clicking the interact button.
 
 
 ## Available Scripts

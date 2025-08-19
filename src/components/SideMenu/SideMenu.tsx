@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import useSession from '../../app/hooks/sessionHook';
 import { Delete, Add } from '@mui/icons-material';

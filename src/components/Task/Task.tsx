@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Paper, Checkbox, Grid, Typography } from '@mui/material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';

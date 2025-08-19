@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@mui/material';
 import styled, { css } from 'styled-components';
 import { styled as MUIStyled } from '@mui/material/styles';
