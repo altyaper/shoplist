@@ -41,6 +41,7 @@ const FadingTaskWrapper = styled(TaskWrapper)<{ isFading: boolean }>`
 
 const RelativeTimeLabel = styled.span<FlagProps>`
   font-size: 0.75rem;
+  font-family: 'Montserrat', sans-serif;
   color: ${({ done }) => done ? '#9e9e9e' : '#9e9e9e'};
   font-weight: 400;
   display: block;
@@ -80,13 +81,13 @@ export const Task = ({
   return (
     <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
       <Grid container spacing={2} alignItems="center">
-        <Grid item xs={1}>
+        <Grid item xs={2}>
           <Checkbox
             onChange={handleCheckboxChange}
             checked={task.done}
           />
         </Grid>
-        <Grid item xs={11}>
+        <Grid item xs={10}>
           <TaskText done={task.done}>
             <Typography variant='body1'>
               {task.text}
