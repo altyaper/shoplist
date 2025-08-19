@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Container, Typography, Stack, IconButton } from "@mui/material";
+import { Container, Typography, Button, Stack, IconButton } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-// import CameraAltIcon from '@mui/icons-material/CameraAlt';
-// import UploadFileIcon from '@mui/icons-material/UploadFile';
 import styled from 'styled-components';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -44,13 +42,6 @@ const TopWrapper = styled.div`
   }
 `;
 
-// const SnapButton = styled(Button)`
-//   font-weight: 700;
-//   font-size: 1rem;
-//   padding: 12px 16px;
-//   border-radius: 12px;
-// `;
-
 interface TasksProps {
   tasks: TaskModel[],
   onMarkDone: (task: TaskModel) => void;
@@ -61,12 +52,7 @@ const Tasks = (props: TasksProps) => {
   const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
-  // const [detectedItems, setDetectedItems] = useState<string[]>([]);
-  // const cameraInputRef = useRef<HTMLInputElement | null>(null);
-  // const galleryInputRef = useRef<HTMLInputElement | null>(null);
-  // const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
-  // const isMenuOpen = Boolean(menuAnchorEl);
   
   
   const data = {
@@ -80,96 +66,10 @@ const Tasks = (props: TasksProps) => {
     ],
   };
 
-  // const handleOpenCamera = () => {
-  //   cameraInputRef.current?.click();
-  // };
-
-  // const handleOpenGallery = () => {
-  //   galleryInputRef.current?.click();
-  // };
-
-  // const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   setMenuAnchorEl(event.currentTarget);
-  // };
-
-  // const handleCloseMenu = () => {
-  //   setMenuAnchorEl(null);
-  // };
-
-  // const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files && event.target.files[0];
-  //   if (!file) return;
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-  //     const response = await fetch('http://localhost:9000', {
-  //       method: 'POST',
-  //       body: formData,
-  //     });
-  //     const json = await response.json();
-  //     const items = Array.isArray(json) ? json : (Array.isArray(json?.items) ? json.items : []);
-  //     setDetectedItems(items.map((it: any) => String(it)));
-  //   } catch (err) {
-  //     setDetectedItems([]);
-  //   } finally {
-  //     event.target.value = '';
-  //   }
-  // };
-
   return (
     <Container>
       <TopWrapper>
        
-        {/* <input
-          ref={cameraInputRef}
-          type="file"
-          accept="image/*"
-          capture="environment"
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-        />
-        <input
-          ref={galleryInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-        /> */}
-        {/* <Stack direction="row" spacing={1} alignItems="center">
-          <SnapButton
-            variant="contained"
-            size="large"
-            onClick={handleOpenMenu}
-            endIcon={<ExpandMoreIcon />}
-            aria-controls={isMenuOpen ? 'snap-add-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={isMenuOpen ? 'true' : undefined}
-          >
-            Snap & Add
-          </SnapButton>
-          <Menu
-            id="snap-add-menu"
-            anchorEl={menuAnchorEl}
-            open={isMenuOpen}
-            onClose={handleCloseMenu}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          >
-            <MenuItem onClick={() => { handleCloseMenu(); handleOpenCamera(); }}>
-              <CameraAltIcon fontSize="small" style={{ marginRight: 8 }} /> Camera
-            </MenuItem>
-            <MenuItem onClick={() => { handleCloseMenu(); handleOpenGallery(); }}>
-              <UploadFileIcon fontSize="small" style={{ marginRight: 8 }} /> Upload
-            </MenuItem>
-          </Menu>
-          {detectedItems.length > 0 && (
-            <Stack direction="row" spacing={0.5} alignItems="center">
-              {detectedItems.map((item, idx) => (
-                <Chip key={idx} size="small" label={item} />
-              ))}
-            </Stack>
-          )}
-        </Stack> */}
         <ChartWrapper>
           {tasks && tasks.length > 0 && <Doughnut data={data} />}
         </ChartWrapper>
@@ -181,8 +81,8 @@ const Tasks = (props: TasksProps) => {
             <Typography variant='h6' style={{ marginBottom: '1rem', color: palette['charcoal'] }}>
               {t("tasks_title")} ({incomplete})
             </Typography>
-            {tasks.filter(task => !task.done).map((task, idx) => (
-              <Task key={`incomplete-${idx}`} {...props} task={task} />
+            {tasks.filter(task => !task.done).map((task) => (
+              <Task key={`incomplete-${task.idx}`} {...props} task={task} />
             ))}
           </>
         )}
@@ -202,8 +102,8 @@ const Tasks = (props: TasksProps) => {
                 {completedSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </IconButton>
             </Stack>
-            {!completedSectionCollapsed && tasks.filter(task => task.done).map((task, idx) => (
-              <Task key={`complete-${idx}`} {...props} task={task} />
+            {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
+              <Task key={`complete-${task.idx}`} {...props} task={task} />
             ))}
           </>
         )}
