@@ -13,7 +13,7 @@ const HamburgerButtonWrapper = MUIStyled(Button)<HamburgerButtonProps>(() => ({
 const Line = styled.span<HamburgerButtonProps>`
   height: 4px;
   border-radius: 5px;
-  background: ${({ open }) => open ? 'white' : 'black' };
+  background: ${({ open }) => open ? 'gray' : 'black' };
   margin-top: 8px;
   transition: all 0.5s ease;
   

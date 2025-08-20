@@ -8,7 +8,8 @@ import { BlackSideProps } from '../../models';
 import { Box, Container, Grid } from '@mui/material';
 
 const BlackSide = styled.div<BlackSideProps>`
-  background-color: #23242A;
+  border-left: 1px solid #efefef;
+  background-color: #fdfdfd;
   width: 100px;
   text-align: center;
   position: fixed;
@@ -57,9 +58,6 @@ export const SideMenu = () => {
         </Grid>
       </Container>
       <BlackSide sideOpen={sideOpen}>
-        <AddButton onClick={handleCleanSession}>
-          <Add />
-        </AddButton>
         <DeleteButton onClick={handleCleanSession}>
           <Delete />
         </DeleteButton>
