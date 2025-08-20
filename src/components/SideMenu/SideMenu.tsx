@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import useSession from '../../app/hooks/sessionHook';
 import { Delete, Add } from '@mui/icons-material';
@@ -33,6 +33,23 @@ export const SideMenu = () => {
   const { t } = useTranslation();
   const { onDeleteAll } = useSession();
   const [sideOpen, setSideOpen] = useState(false);
+  const sideMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sideMenuRef.current && !sideMenuRef.current.contains(event.target as Node)) {
+        setSideOpen(false);
+      }
+    };
+
+    if (sideOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sideOpen]);
 
   const handleToggleSideBar = () => {
     setSideOpen(prev => !prev);
@@ -57,7 +74,7 @@ export const SideMenu = () => {
           </Grid>
         </Grid>
       </Container>
-      <BlackSide sideOpen={sideOpen}>
+      <BlackSide ref={sideMenuRef} sideOpen={sideOpen}>
         <DeleteButton onClick={handleCleanSession}>
           <Delete />
         </DeleteButton>
