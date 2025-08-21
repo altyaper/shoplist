@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { ArrowBack } from '@mui/icons-material';
-import { TaskSwitch } from './TaskSwitch';
 import { useTranslation } from 'react-i18next';
 import { Task } from '../../models';
 
