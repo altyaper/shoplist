@@ -54,7 +54,6 @@ const Tasks = (props: TasksProps) => {
   const incomplete = tasks.length - complete;
   const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
   
-  
   const data = {
     datasets: [
       {
@@ -65,6 +64,8 @@ const Tasks = (props: TasksProps) => {
       },
     ],
   };
+
+  const completedSectionId = 'completed-section';
 
   return (
     <Container>
@@ -98,13 +99,23 @@ const Tasks = (props: TasksProps) => {
                 size="small"
                 onClick={() => setCompletedSectionCollapsed(!completedSectionCollapsed)}
                 style={{ color: palette['purpure-1'] }}
+                aria-label={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
+                aria-controls={completedSectionId}
+                aria-expanded={!completedSectionCollapsed}
+                title={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
               >
                 {completedSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </IconButton>
             </Stack>
-            {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
-              <Task key={`complete-${task.idx}`} {...props} task={task} />
-            ))}
+            <div
+              id={completedSectionId}
+              role="region"
+              aria-hidden={completedSectionCollapsed}
+            >
+              {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
+                <Task key={`complete-${task.idx}`} {...props} task={task} />
+              ))}
+            </div>
           </>
         )}
         

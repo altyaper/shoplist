@@ -74,8 +74,12 @@ export const SideMenu = () => {
           </Grid>
         </Grid>
       </Container>
-      <BlackSide ref={sideMenuRef} sideOpen={sideOpen}>
-        <DeleteButton onClick={handleCleanSession}>
+      <BlackSide ref={sideMenuRef} id="side-menu" sideOpen={sideOpen}>
+        <DeleteButton
+          onClick={handleCleanSession}
+          aria-label={t('delete_all_aria') || 'Delete all tasks'}
+          title={t('delete_all_aria') || 'Delete all tasks'}
+        >
           <Delete />
         </DeleteButton>
       </BlackSide>

@@ -38,11 +38,24 @@ const Line = styled.span<HamburgerButtonProps>`
 `;
 
 export const HamburgerButton = (props: HamburgerButtonProps) => {
+  const { open, onClick, ...otherProps } = props;
+  
   return (
-    <HamburgerButtonWrapper {...props}>
-      <Line lineSize='s' open={props.open} />
-      <Line lineSize='m' open={props.open} />
-      <Line lineSize='l' open={props.open} />
+    <HamburgerButtonWrapper 
+      {...otherProps}
+      onClick={onClick}
+      aria-label={open ? "Close side menu" : "Open side menu"}
+      aria-expanded={open}
+      aria-controls="side-menu"
+      aria-haspopup="true"
+      title={open ? "Close side menu" : "Open side menu"}
+    >
+      <Line lineSize='s' open={open} />
+      <Line lineSize='m' open={open} />
+      <Line lineSize='l' open={open} />
+      <span className="sr-only">
+        {open ? "Close side menu" : "Open side menu"}
+      </span>
     </HamburgerButtonWrapper>
   )
 }
