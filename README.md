@@ -11,6 +11,9 @@ Never forget what you need at the store again! 🛒✨
 
 In the project directory, you can run:
 
+### `yarn install`
+install dependencies
+
 ### `yarn start`
 
 Runs the app in the development mode.\
@@ -20,3 +23,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ##
+
+## DEMO
+
+https://master.d1wwcsbtvaolnd.amplifyapp.com/

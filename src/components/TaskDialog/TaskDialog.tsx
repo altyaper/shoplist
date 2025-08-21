@@ -102,14 +102,24 @@ export const TaskDialog = ({
             const errorValues = Object.values(errors);
             const hasError = errorValues.length > 0;
             const firstError = (hasError && errorValues[0]) || null;
+
+            const handleKeyDown = (event: React.KeyboardEvent) => {
+              if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                if (!hasError && values.text.trim()) {
+                  handleSubmit();
+                }
+              }
+            };
+
             return (
               <form onSubmit={handleSubmit}>
                 <HeaderModal>
-                  <TitleModal variant='h2'>
+                  <TitleModal variant='h4'>
                     {t('create_task_title')}
                   </TitleModal>
                   <CloseSection>
-                    <TUButton size="large" onClick={onCloseModal}>
+                    <TUButton size="small" onClick={onCloseModal}>
                       <ArrowBack />
                     </TUButton>
                   </CloseSection>
@@ -123,12 +133,7 @@ export const TaskDialog = ({
                     multiline
                     value={values.text}
                     onChange={handleChange}
-                  />
-                  <TaskSwitch
-                    label={t('delete_on_complete_label')}
-                    name='deleteOnComplete'
-                    value={values.deleteOnComplete}
-                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                   />
                 </ContentModal>
                 <FooterWrapper>
