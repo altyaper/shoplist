@@ -4,7 +4,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styled from 'styled-components';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
 import { Task as TaskModel } from '../../models';
@@ -28,20 +27,6 @@ const Empty = styled.div`
   font-weight: bold;
 `;
 
-const ChartWrapper = styled.div`
-  display: none;
-  width: 5em;
-`;
-
-const TopWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.2em;
-  h2 {
-    margin-right: auto;
-  }
-`;
-
 interface TasksProps {
   tasks: TaskModel[],
   onMarkDone: (task: TaskModel) => void;
@@ -56,17 +41,6 @@ const Tasks = (props: TasksProps) => {
   const incomplete = tasks.length - complete;
   const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
   const [pendingSectionCollapsed, setPendingSectionCollapsed] = useState<boolean>(false);
-  
-  const data = {
-    datasets: [
-      {
-        data: [complete, incomplete],
-        backgroundColor: [palette['purpure-1'], palette['amber-1']],
-        borderColor: [palette['purpure-2'], palette['amber-2']],
-        borderWidth: 1,
-      },
-    ],
-  };
 
   const completedSectionId = 'completed-section';
   const pendingSectionId = 'pending-section';

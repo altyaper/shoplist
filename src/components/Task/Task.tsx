@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Paper, Checkbox, Grid, Typography, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Checkbox, Grid, Typography, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { Edit, Delete, MoreVert } from '@mui/icons-material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
