@@ -58,16 +58,34 @@ const DialogContentWrapper = styled(DialogContent)`
 
 interface TaskDialogProps {
   open: boolean;
+  task?: Task | null;
   onSubmit: (task: Task) => void;
   onCloseModal: () => void;
 }
 
 export const TaskDialog = ({
   open,
+  task,
   onSubmit,
   onCloseModal
 }: TaskDialogProps) => {
   const { t } = useTranslation();
+  const isEditing = !!task;
+  
+  const initialValues = task ? {
+    idx: task.idx,
+    text: task.text,
+    createdAt: task.createdAt,
+    done: task.done,
+    deleteOnComplete: task.deleteOnComplete
+  } : {
+    idx: 0,
+    text: '',
+    createdAt: '',
+    done: false,
+    deleteOnComplete: true
+  };
+
   return (
     <DialogWrapper
       fullScreen
@@ -76,13 +94,7 @@ export const TaskDialog = ({
       <DialogContentWrapper>
         <Container>
           <Formik
-            initialValues={{
-              idx: 0,
-              text: '',
-              createdAt: '',
-              done: false,
-              deleteOnComplete: true
-            }}
+            initialValues={initialValues}
             validationSchema={newTaskSchema}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
@@ -115,7 +127,7 @@ export const TaskDialog = ({
               <form onSubmit={handleSubmit}>
                 <HeaderModal>
                   <TitleModal variant='h4'>
-                    {t('create_task_title')}
+                    {isEditing ? t('edit_task_title') || 'Edit Task' : t('create_task_title')}
                   </TitleModal>
                   <CloseSection>
                     <TUButton size="small" onClick={onCloseModal}>
@@ -145,7 +157,7 @@ export const TaskDialog = ({
                       type="submit"
                       disabled={isSubmitting}
                     >
-                      {t('create_task')}
+                      {isEditing ? (t('save_task') || 'Save') : t('create_task')}
                     </Button>
 
                   </Container>

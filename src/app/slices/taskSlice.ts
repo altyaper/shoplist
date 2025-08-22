@@ -20,6 +20,16 @@ export const tasksSlice = createSlice({
       }
       state.tasksList.push(payload);
     },
+    updateTask: (state, action) => {
+      const { payload } = action;
+      state.tasksList = state.tasksList.map((t: { idx: any; }) => {
+        if (t.idx === payload.idx) {
+          return { ...t, ...payload };
+        }
+        return t;
+      });
+      db.update(state.tasksList, 'tasks');
+    },
     deleteAll: (state) => {
       db.remove('tasks');
       state.tasksList = [];
@@ -36,17 +46,15 @@ export const tasksSlice = createSlice({
     },
     removeTask: (state, action) => {
       const task = action.payload;
-      if (task.deleteOnComplete) {
-        state.tasksList = state.tasksList.filter((t: { idx: any; }) => {
-          return t.idx !== task.idx;
-        });
-        db.update(state.tasksList, 'tasks');
-      }
+      state.tasksList = state.tasksList.filter((t: { idx: any; }) => {
+        return t.idx !== task.idx;
+      });
+      db.update(state.tasksList, 'tasks');
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addTask, deleteAll, markAsDone, removeTask } = tasksSlice.actions;
+export const { addTask, updateTask, deleteAll, markAsDone, removeTask } = tasksSlice.actions;
 
 export default tasksSlice.reducer

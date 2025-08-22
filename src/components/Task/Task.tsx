@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Paper, Checkbox, Grid, Typography } from '@mui/material';
+import { Paper, Checkbox, Grid, Typography, IconButton } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -36,7 +37,11 @@ const FadingTaskWrapper = styled(TaskWrapper)<{ isFading: boolean }>`
   `}
 `;
 
-
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
 
 const RelativeTimeLabel = styled.span<FlagProps>`
   font-size: 0.75rem;
@@ -49,6 +54,8 @@ const RelativeTimeLabel = styled.span<FlagProps>`
 
 export const Task = ({
   onMarkDone,
+  onEdit,
+  onDelete,
   task
 }: TaskProps) => {
   const [isFading, setIsFading] = useState(false);
@@ -64,6 +71,14 @@ export const Task = ({
     }
   };
 
+  const handleEdit = () => {
+    onEdit(task);
+  };
+
+  const handleDelete = () => {
+    onDelete(task);
+  };
+
   return (
     <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
       <Grid container spacing={2} alignItems="center">
@@ -73,7 +88,7 @@ export const Task = ({
             checked={task.done}
           />
         </Grid>
-        <Grid item xs={10} md={11}>
+        <Grid item xs={8} md={9}>
           <TaskText done={task.done}>
             <Typography variant='body1'>
               {task.text}
@@ -82,6 +97,28 @@ export const Task = ({
               Added {dayjs(task.createdAt).fromNow()}
             </RelativeTimeLabel>
           </TaskText>
+        </Grid>
+        <Grid item xs={2} md={2}>
+          <ActionButtons>
+            <IconButton
+              size="small"
+              onClick={handleEdit}
+              aria-label="Edit task"
+              title="Edit task"
+              color="primary"
+            >
+              <Edit fontSize="small" />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={handleDelete}
+              aria-label="Delete task"
+              title="Delete task"
+              color="error"
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </ActionButtons>
         </Grid>
       </Grid>
     </FadingTaskWrapper>

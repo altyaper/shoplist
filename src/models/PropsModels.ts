@@ -18,6 +18,8 @@ export interface BlackSideProps {
 
 export interface TaskProps {
   onMarkDone: (task: Task) => void;
+  onEdit: (task: Task) => void;
+  onDelete: (task: Task) => void;
   task: Task;
 }
 

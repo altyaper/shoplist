@@ -21,34 +21,59 @@ const TaskPageWrapper = styled.div`
 
 export const TaskPage = () => {
   const tasks = useSelector(getTasksSelector);
-  const {onAdd, onDone} = useSession();
+  const {onAdd, onUpdate, onDone, onDelete} = useSession();
   const [openDialog, setOpenDialog] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
   const { t } = useTranslation();
   
-  const handleOnSubmit = (task: Task) => onAdd(task);
+  const handleOnSubmit = (task: Task) => {
+    if (editingTask) {
+      onUpdate(task);
+    } else {
+      onAdd(task);
+    }
+    setEditingTask(null);
+  };
+
+  const handleEdit = (task: Task) => {
+    setEditingTask(task);
+    setOpenDialog(true);
+  };
+
+  const handleDelete = (task: Task) => {
+    onDelete(task);
+  };
   
   const handleMarkDone = (task: Task) => {
     onDone(task);
   };
 
-  const handleCloseModal = () => setOpenDialog(false);
+  const handleCloseModal = () => {
+    setOpenDialog(false);
+    setEditingTask(null);
+  };
 
-  const handleOpenModal = () => setOpenDialog(true);
+  const handleOpenModal = () => {
+    setEditingTask(null);
+    setOpenDialog(true);
+  };
 
   return (
     <TaskPageWrapper>
       <Tasks
         onMarkDone={handleMarkDone}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
         tasks={tasks}
       />
       <MainFooterWrapper>
         <Container>
           <Button
             size='large'
-            variant='contained'
             disableElevation
-            type="submit"
+            variant='contained'
             fullWidth
+            type="submit"
             onClick={handleOpenModal}
           >
             {t('add_task')}
@@ -59,6 +84,7 @@ export const TaskPage = () => {
         onSubmit={handleOnSubmit}
         open={openDialog}
         onCloseModal={handleCloseModal}
+        task={editingTask}
       />
     </TaskPageWrapper>
   )

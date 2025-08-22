@@ -45,10 +45,12 @@ const TopWrapper = styled.div`
 interface TasksProps {
   tasks: TaskModel[],
   onMarkDone: (task: TaskModel) => void;
+  onEdit: (task: TaskModel) => void;
+  onDelete: (task: TaskModel) => void;
 }
 
 const Tasks = (props: TasksProps) => {
-  const { tasks } = props;
+  const { tasks, onMarkDone, onEdit, onDelete } = props;
   const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
@@ -83,7 +85,13 @@ const Tasks = (props: TasksProps) => {
               {t("tasks_title")} ({incomplete})
             </Typography>
             {tasks.filter(task => !task.done).map((task) => (
-              <Task key={`incomplete-${task.idx}`} {...props} task={task} />
+              <Task 
+                key={`incomplete-${task.idx}`} 
+                task={task}
+                onMarkDone={onMarkDone}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
             ))}
           </>
         )}
@@ -113,7 +121,13 @@ const Tasks = (props: TasksProps) => {
               aria-hidden={completedSectionCollapsed}
             >
               {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
-                <Task key={`complete-${task.idx}`} {...props} task={task} />
+                <Task 
+                  key={`complete-${task.idx}`} 
+                  task={task}
+                  onMarkDone={onMarkDone}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
               ))}
             </div>
           </>

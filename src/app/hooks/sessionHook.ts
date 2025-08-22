@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { useDispatch, useSelector } from '../store';
-import { addTask, deleteAll, markAsDone, removeTask } from "../slices/taskSlice.js";
+import { addTask, deleteAll, markAsDone, removeTask, updateTask } from "../slices/taskSlice.js";
 import { getTasksSelector } from '../selectors/tasksSelectors';
 import { Task } from '../../models';
 
@@ -23,6 +23,14 @@ const useSession = () => {
     dispatch(addTask(newTask));
   }
 
+  const onUpdate = (task: Task) => {
+    const updatedTask = {
+      ...task,
+      updatedAt: dayjs().format()
+    };
+    dispatch(updateTask(updatedTask));
+  }
+
   const onDeleteAll = () => {
     dispatch(deleteAll())
   }
@@ -38,6 +46,7 @@ const useSession = () => {
   return {
     tasks,
     onAdd,
+    onUpdate,
     onDone,
     onDelete,
     onDeleteAll,
