@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Paper, Checkbox, Grid, Typography, IconButton } from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
+import { Paper, Checkbox, Grid, Typography, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Edit, Delete, MoreVert } from '@mui/icons-material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { TaskProps, FlagProps } from '../../models';
+import { TaskActionModal } from './TaskActionModal';
 
 dayjs.extend(relativeTime);
 
@@ -59,6 +60,9 @@ export const Task = ({
   task
 }: TaskProps) => {
   const [isFading, setIsFading] = useState(false);
+  const [showMobileModal, setShowMobileModal] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleCheckboxChange = () => {
     if (!task.done) {
@@ -79,49 +83,80 @@ export const Task = ({
     onDelete(task);
   };
 
+  const handleMobileMenuOpen = () => {
+    setShowMobileModal(true);
+  };
+
+  const handleMobileMenuClose = () => {
+    setShowMobileModal(false);
+  };
+
   return (
-    <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={2} md={1}>
-          <Checkbox
-            onChange={handleCheckboxChange}
-            checked={task.done}
-          />
+    <>
+      <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={2} md={1}>
+            <Checkbox
+              onChange={handleCheckboxChange}
+              checked={task.done}
+            />
+          </Grid>
+          <Grid item xs={8} md={9}>
+            <TaskText done={task.done}>
+              <Typography variant='body1'>
+                {task.text}
+              </Typography>
+              <RelativeTimeLabel done={task.done}>
+                Added {dayjs(task.createdAt).fromNow()}
+              </RelativeTimeLabel>
+            </TaskText>
+          </Grid>
+          <Grid item xs={2} md={2}>
+            {isMobile ? (
+              <IconButton
+                size="small"
+                onClick={handleMobileMenuOpen}
+                aria-label="Task actions menu"
+                title="Task actions menu"
+              >
+                <MoreVert fontSize="small" />
+              </IconButton>
+            ) : (
+              <ActionButtons>
+                <IconButton
+                  size="small"
+                  onClick={handleEdit}
+                  aria-label="Edit task"
+                  title="Edit task"
+                  color="primary"
+                >
+                  <Edit fontSize="small" />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={handleDelete}
+                  aria-label="Delete task"
+                  title="Delete task"
+                  color="error"
+                >
+                  <Delete fontSize="small" />
+                </IconButton>
+              </ActionButtons>
+            )}
+          </Grid>
         </Grid>
-        <Grid item xs={8} md={9}>
-          <TaskText done={task.done}>
-            <Typography variant='body1'>
-              {task.text}
-            </Typography>
-            <RelativeTimeLabel done={task.done}>
-              Added {dayjs(task.createdAt).fromNow()}
-            </RelativeTimeLabel>
-          </TaskText>
-        </Grid>
-        <Grid item xs={2} md={2}>
-          <ActionButtons>
-            <IconButton
-              size="small"
-              onClick={handleEdit}
-              aria-label="Edit task"
-              title="Edit task"
-              color="primary"
-            >
-              <Edit fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={handleDelete}
-              aria-label="Delete task"
-              title="Delete task"
-              color="error"
-            >
-              <Delete fontSize="small" />
-            </IconButton>
-          </ActionButtons>
-        </Grid>
-      </Grid>
-    </FadingTaskWrapper>
+      </FadingTaskWrapper>
+      
+      {isMobile && (
+        <TaskActionModal
+          open={showMobileModal}
+          onClose={handleMobileMenuClose}
+          task={task}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      )}
+    </>
   );
 }
 
