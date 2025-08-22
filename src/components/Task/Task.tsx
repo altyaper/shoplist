@@ -9,14 +9,15 @@ import { TaskActionModal } from './TaskActionModal';
 
 dayjs.extend(relativeTime);
 
-const TaskWrapper = styled(Paper)<FlagProps>`
-  border: 1px solid #E3E4E8;
+const TaskWrapper = styled('div')<FlagProps>`
+  border: none;
   padding: 0.8em;
   border-radius: 15px;
   margin-bottom: 20px;
   transition: all 0.3s ease-in-out;
   opacity: 1;
   transform: translateY(0);
+  box-shadow: none;
 
   .MuiSvgIcon-root {
     font-size: 2rem;
@@ -93,7 +94,7 @@ export const Task = ({
 
   return (
     <>
-      <FadingTaskWrapper done={task.done} isFading={isFading} variant="outlined">
+      <FadingTaskWrapper done={task.done} isFading={isFading}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={2} md={1}>
             <Checkbox
@@ -128,18 +129,18 @@ export const Task = ({
                   onClick={handleEdit}
                   aria-label="Edit task"
                   title="Edit task"
-                  color="primary"
+                  sx={{ color: '#A362EA' }}
                 >
-                  <Edit fontSize="small" />
+                  <Edit sx={{ fontSize: '16px' }} />
                 </IconButton>
                 <IconButton
                   size="small"
                   onClick={handleDelete}
                   aria-label="Delete task"
                   title="Delete task"
-                  color="error"
+                  sx={{ color: '#A362EA' }}
                 >
-                  <Delete fontSize="small" />
+                  <Delete sx={{ fontSize: '16px' }} />
                 </IconButton>
               </ActionButtons>
             )}

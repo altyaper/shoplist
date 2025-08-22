@@ -55,6 +55,7 @@ const Tasks = (props: TasksProps) => {
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
   const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
+  const [pendingSectionCollapsed, setPendingSectionCollapsed] = useState<boolean>(false);
   
   const data = {
     datasets: [
@@ -68,29 +69,39 @@ const Tasks = (props: TasksProps) => {
   };
 
   const completedSectionId = 'completed-section';
+  const pendingSectionId = 'pending-section';
 
   return (
-    <Container>
-      <TopWrapper>
-       
-        <ChartWrapper>
-          {tasks && tasks.length > 0 && <Doughnut data={data} />}
-        </ChartWrapper>
-      </TopWrapper>
+    <div>
       <TasksWrapper className="list">
         {/* Incomplete Tasks */}
         {incomplete > 0 && (
           <>
-            <Typography variant='h6' style={{ marginBottom: '1rem', color: palette['charcoal'] }}>
-              {t("tasks_title")} ({incomplete})
-            </Typography>
-            {tasks.filter(task => !task.done).map((task) => (
+            <Container style={{backgroundColor: palette['gray-3']}}>
+              <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
+                <Typography variant='h6' style={{ color: palette['charcoal'], fontSize: '1em' }}>
+                  {t("tasks_title")} ({incomplete})
+                </Typography>
+                <IconButton
+                  size="small"
+                  onClick={() => setPendingSectionCollapsed(!pendingSectionCollapsed)}
+                  style={{ color: palette['purpure-1'] }}
+                  aria-label={pendingSectionCollapsed ? 'Expand pending section' : 'Collapse pending section'}
+                  aria-controls={pendingSectionId}
+                  aria-expanded={!pendingSectionCollapsed}
+                  title={pendingSectionCollapsed ? 'Expand pending section' : 'Collapse pending section'}
+                >
+                  {pendingSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                </IconButton>
+              </Stack>
+            </Container>
+            {pendingSectionCollapsed && tasks.filter(task => !task.done).map((task) => (
               <Task 
-                key={`incomplete-${task.idx}`} 
-                task={task}
-                onMarkDone={onMarkDone}
-                onEdit={onEdit}
-                onDelete={onDelete}
+              key={`incomplete-${task.idx}`} 
+              task={task}
+              onMarkDone={onMarkDone}
+              onEdit={onEdit}
+              onDelete={onDelete}
               />
             ))}
           </>
@@ -99,22 +110,24 @@ const Tasks = (props: TasksProps) => {
         {/* Completed Tasks */}
         {complete > 0 && (
           <>
-            <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
-              <Typography variant='h6' style={{ color: palette['purpure-1'] }}>
-                Completed ({complete})
-              </Typography>
-              <IconButton
-                size="small"
-                onClick={() => setCompletedSectionCollapsed(!completedSectionCollapsed)}
-                style={{ color: palette['purpure-1'] }}
-                aria-label={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
-                aria-controls={completedSectionId}
-                aria-expanded={!completedSectionCollapsed}
-                title={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
-              >
-                {completedSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </IconButton>
-            </Stack>
+            <Container style={{backgroundColor: palette['gray-3']}}>
+              <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
+                <Typography variant='h6' style={{ color: palette['purpure-1'], fontSize: '1em' }}>
+                  Completed ({complete})
+                </Typography>
+                <IconButton
+                  size="small"
+                  onClick={() => setCompletedSectionCollapsed(!completedSectionCollapsed)}
+                  style={{ color: palette['purpure-1'] }}
+                  aria-label={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
+                  aria-controls={completedSectionId}
+                  aria-expanded={!completedSectionCollapsed}
+                  title={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
+                >
+                  {completedSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                </IconButton>
+              </Stack>
+            </Container>
             <div
               id={completedSectionId}
               role="region"
@@ -141,7 +154,7 @@ const Tasks = (props: TasksProps) => {
           </Empty>
         )}
       </TasksWrapper>
-    </Container>
+    </div>
   )
 }
 

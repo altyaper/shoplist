@@ -157,7 +157,7 @@ export const TaskDialog = ({
                       type="submit"
                       disabled={isSubmitting}
                     >
-                      {isEditing ? (t('save_task') || 'Save') : t('create_task')}
+                      {isEditing ? (t('save_item') || 'Save') : t('create_task')}
                     </Button>
 
                   </Container>

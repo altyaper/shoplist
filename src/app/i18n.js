@@ -14,9 +14,11 @@ const resources = {
       completed_task: 'Picked!',
       delete_confirm_message: 'Are you sure you want to delete all the items?',
       create_task_title: 'Create new item',
+      edit_task_title: 'Edit new item',
       empty_tasks: 'NO ITEMS  YET',
       delete_on_complete_label: 'Delete on picked',
       create_task: 'ADD ITEM',
+      save_item: 'SAVE ITEM',
     }
   },
   'es-MX': {
