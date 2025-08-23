@@ -20,11 +20,9 @@ const TasksWrapper = styled.ul`
 const Empty = styled.div`
   text-align: center;
   color: ${palette['charcoal']};
-  background-color: ${palette['gray-3']};
   padding: 2em;
-  font-size: 1.4em;
+  font-size: 1.2em;
   border-radius: 15px;
-  font-weight: bold;
 `;
 
 interface TasksProps {
@@ -123,13 +121,15 @@ const Tasks = (props: TasksProps) => {
             </Container>
           </>
         )}
-        
         {!tasks.length && (
+        <Container>
           <Empty>
-            <Typography variant='h5'>
+            <Typography variant='h5' style={{ fontWeight: 'bold'}}>
               {t('empty_tasks')}
             </Typography>
+            <p>Nothing here yet… start adding your groceries!</p>
           </Empty>
+        </Container>
         )}
       </TasksWrapper>
     </div>
