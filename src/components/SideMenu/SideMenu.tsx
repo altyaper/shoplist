@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import useSession from '../../app/hooks/sessionHook';
-import { Delete } from '@mui/icons-material';
-import { DeleteButton, HamburgerButton } from '../Buttons';
+import { Delete, Share } from '@mui/icons-material';
+import { DeleteButton, HamburgerButton, ShareButton } from '../Buttons';
 import { useTranslation } from 'react-i18next';
 import { BlackSideProps } from '../../models';
 import { Box, Container, Grid } from '@mui/material';
@@ -31,7 +31,7 @@ const SideMenuWrapper = styled.div`
 
 export const SideMenu = () => {
   const { t } = useTranslation();
-  const { onDeleteAll } = useSession();
+  const { onDeleteAll, tasks } = useSession();
   const [sideOpen, setSideOpen] = useState(false);
   const sideMenuRef = useRef<HTMLDivElement>(null);
 
@@ -63,6 +63,54 @@ export const SideMenu = () => {
     }
   }
 
+  const handleShareList = async () => {
+    // Get only pending (not completed) tasks
+    const pendingTasks = tasks.filter(task => !task.done);
+    
+    if (pendingTasks.length === 0) {
+      alert(t('no_pending_items') || 'No pending items to share');
+      return;
+    }
+
+    // Create the text to share
+    const listText = pendingTasks.map((task, index) => `${index + 1}. ${task.text}`).join('\n');
+    const shareText = `${t('shopping_list') || 'Shopping List'}:\n\n${listText}`;
+
+    // Use Web Share API if available, otherwise fallback to clipboard
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: t('shopping_list') || 'Shopping List',
+          text: shareText,
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+        // Fallback to clipboard
+        copyToClipboard(shareText);
+      }
+    } else {
+      // Fallback to clipboard
+      copyToClipboard(shareText);
+    }
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert(t('list_copied') || 'List copied to clipboard!');
+    } catch (error) {
+      console.error('Failed to copy to clipboard:', error);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert(t('list_copied') || 'List copied to clipboard!');
+    }
+  };
+
   return (
     <SideMenuWrapper>
       <Container>
@@ -75,6 +123,13 @@ export const SideMenu = () => {
         </Grid>
       </Container>
       <BlackSide ref={sideMenuRef} id="side-menu" sideOpen={sideOpen}>
+        <ShareButton
+          onClick={handleShareList}
+          aria-label={t('share_list_aria') || 'Share shopping list'}
+          title={t('share_list_aria') || 'Share shopping list'}
+        >
+          <Share />
+        </ShareButton>
         <DeleteButton
           onClick={handleCleanSession}
           aria-label={t('delete_all_aria') || 'Delete all tasks'}

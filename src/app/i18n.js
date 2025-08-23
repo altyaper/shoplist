@@ -19,6 +19,10 @@ const resources = {
       delete_on_complete_label: 'Delete on picked',
       create_task: 'ADD ITEM',
       save_item: 'SAVE ITEM',
+      share_list_aria: 'Share shopping list',
+      shopping_list: 'Shopping List',
+      no_pending_items: 'No pending items to share',
+      list_copied: 'List copied to clipboard!',
     }
   },
   'es-MX': {
@@ -32,6 +36,10 @@ const resources = {
       empty_tasks: 'NO HAY ARTÍCULOS',
       delete_on_complete_label: 'Eliminar al agarrar',
       create_task: 'AGREGAR ARTÍCULO',
+      share_list_aria: 'Compartir lista de compras',
+      shopping_list: 'Lista de Compras',
+      no_pending_items: 'No hay artículos pendientes para compartir',
+      list_copied: '¡Lista copiada al portapapeles!',
     }
   },
 };
