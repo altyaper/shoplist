@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Checkbox, Grid, Typography, IconButton, useMediaQuery, useTheme } from '@mui/material';
-import { Edit, Delete, MoreVert } from '@mui/icons-material';
+import { Checkbox, Grid, Typography, IconButton, useMediaQuery, useTheme, Stack } from '@mui/material';
+import { EditOutlined, MoreVert, DeleteOutline } from '@mui/icons-material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -9,11 +9,21 @@ import { TaskActionModal } from './TaskActionModal';
 
 dayjs.extend(relativeTime);
 
+const ActionIcon = styled(IconButton)`
+  &:hover {
+    background-color: transparent !important;
+  }
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+`
+
 const TaskWrapper = styled('div')<FlagProps>`
   border: none;
-  padding: 0.8em;
+  padding: 0.2em;
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   transition: all 0.3s ease-in-out;
   opacity: 1;
   transform: translateY(0);
@@ -41,7 +51,6 @@ const FadingTaskWrapper = styled(TaskWrapper)<{ isFading: boolean }>`
 
 const ActionButtons = styled.div`
   display: flex;
-  gap: 8px;
   align-items: center;
 `;
 
@@ -53,6 +62,12 @@ const RelativeTimeLabel = styled.span<FlagProps>`
   display: block;
   margin-top: 0.3em;
 `;
+
+const StaticCheckbox = styled(Checkbox)({
+  "&:hover": {
+    backgroundColor: "transparent !important",
+  }
+});
 
 export const Task = ({
   onMarkDone,
@@ -95,14 +110,14 @@ export const Task = ({
   return (
     <>
       <FadingTaskWrapper done={task.done} isFading={isFading}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={2} md={1}>
-            <Checkbox
-              onChange={handleCheckboxChange}
-              checked={task.done}
-            />
-          </Grid>
-          <Grid item xs={8} md={9}>
+        <Grid container alignItems="center">
+          <Grid item xs={10}>
+          <Stack direction="row" spacing={2}>
+            <StaticCheckbox
+                disableFocusRipple
+                onChange={handleCheckboxChange}
+                checked={task.done}
+              />
             <TaskText done={task.done}>
               <Typography variant='body1'>
                 {task.text}
@@ -111,37 +126,38 @@ export const Task = ({
                 Added {dayjs(task.createdAt).fromNow()}
               </RelativeTimeLabel>
             </TaskText>
+          </Stack>
           </Grid>
-          <Grid item xs={2} md={2}>
+          <Grid item xs={2} justifyContent="flex-end">
             {isMobile ? (
-              <IconButton
+              <ActionIcon
                 size="small"
                 onClick={handleMobileMenuOpen}
                 aria-label="Task actions menu"
                 title="Task actions menu"
               >
                 <MoreVert fontSize="small" />
-              </IconButton>
+              </ActionIcon>
             ) : (
               <ActionButtons>
-                <IconButton
+                <ActionIcon
                   size="small"
                   onClick={handleEdit}
                   aria-label="Edit task"
                   title="Edit task"
-                  sx={{ color: '#A362EA' }}
+                  sx={{ color: '#A362EA', ml: 'auto' }}
                 >
-                  <Edit sx={{ fontSize: '16px' }} />
-                </IconButton>
-                <IconButton
+                  <EditOutlined sx={{ fontSize: '16px' }} />
+                </ActionIcon>
+                <ActionIcon
                   size="small"
                   onClick={handleDelete}
                   aria-label="Delete task"
                   title="Delete task"
                   sx={{ color: '#A362EA' }}
                 >
-                  <Delete sx={{ fontSize: '16px' }} />
-                </IconButton>
+                  <DeleteOutline sx={{ fontSize: '16px' }} />
+                </ActionIcon>
               </ActionButtons>
             )}
           </Grid>

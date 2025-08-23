@@ -59,7 +59,7 @@ const Tasks = (props: TasksProps) => {
                 <IconButton
                   size="small"
                   onClick={() => setPendingSectionCollapsed(!pendingSectionCollapsed)}
-                  style={{ color: palette['purpure-1'] }}
+                  style={{ color: palette['purpure-1'], marginLeft: 'auto' }}
                   aria-label={pendingSectionCollapsed ? 'Expand pending section' : 'Collapse pending section'}
                   aria-controls={pendingSectionId}
                   aria-expanded={!pendingSectionCollapsed}
@@ -69,7 +69,8 @@ const Tasks = (props: TasksProps) => {
                 </IconButton>
               </Stack>
             </Container>
-            {pendingSectionCollapsed && tasks.filter(task => !task.done).map((task) => (
+            <Container disableGutters>
+            {!pendingSectionCollapsed && tasks.filter(task => !task.done).map((task) => (
               <Task 
               key={`incomplete-${task.idx}`} 
               task={task}
@@ -78,6 +79,7 @@ const Tasks = (props: TasksProps) => {
               onDelete={onDelete}
               />
             ))}
+            </Container>
           </>
         )}
         
@@ -92,7 +94,7 @@ const Tasks = (props: TasksProps) => {
                 <IconButton
                   size="small"
                   onClick={() => setCompletedSectionCollapsed(!completedSectionCollapsed)}
-                  style={{ color: palette['purpure-1'] }}
+                  style={{ color: palette['purpure-1'], marginLeft: 'auto' }}
                   aria-label={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
                   aria-controls={completedSectionId}
                   aria-expanded={!completedSectionCollapsed}
@@ -102,21 +104,23 @@ const Tasks = (props: TasksProps) => {
                 </IconButton>
               </Stack>
             </Container>
-            <div
-              id={completedSectionId}
-              role="region"
-              aria-hidden={completedSectionCollapsed}
-            >
-              {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
-                <Task 
-                  key={`complete-${task.idx}`} 
-                  task={task}
-                  onMarkDone={onMarkDone}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                />
-              ))}
-            </div>
+            <Container disableGutters>
+              <div
+                id={completedSectionId}
+                role="region"
+                aria-hidden={completedSectionCollapsed}
+                >
+                {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
+                  <Task 
+                    key={`complete-${task.idx}`} 
+                    task={task}
+                    onMarkDone={onMarkDone}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    />
+                  ))}
+              </div>
+            </Container>
           </>
         )}
         
