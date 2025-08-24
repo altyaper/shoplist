@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { 
-  Dialog, 
-  IconButton, 
-  Button, 
-  TextField, 
+import {
+  Dialog,
+  IconButton,
+  Button,
+  TextField,
   Box,
   Typography,
   Slide,
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import { Close, Edit, Delete, Save, DeleteOutline, SaveOutlined, EditOutlined, Check, CheckOutlined } from '@mui/icons-material';
+import { Close, Save, DeleteOutline, EditOutlined, CheckOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { TransitionProps } from '@mui/material/transitions';
 import { Task } from '../../models';
@@ -37,7 +37,7 @@ const MobileModalWrapper = styled(Dialog)`
     right: 0;
     }
     `;
-    
+
 const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -181,7 +181,7 @@ export const TaskActionModal = ({
           <Close />
         </IconButton>
       </ModalHeader>
-      
+
       <ModalContent>
         {isMobile ? (
           // Mobile: Show TextField immediately
@@ -233,7 +233,7 @@ export const TaskActionModal = ({
                 >
                   {t('edit_item')}
                 </ActionButton>
-                
+
               </>
             ) : (
               <EditSection>
