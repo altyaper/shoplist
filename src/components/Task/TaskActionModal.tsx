@@ -140,20 +140,14 @@ export const TaskActionModal = ({
         text: editText.trim()
       });
     }
-    if (!isMobile) {
-      setIsEditing(false);
-    } else {
-      onClose();
-    }
+    // Always close the modal after saving
+    onClose();
   };
 
   const handleCancel = () => {
     setEditText(task.text);
-    if (!isMobile) {
-      setIsEditing(false);
-    } else {
-      onClose();
-    }
+    // Always close the modal after canceling
+    onClose();
   };
 
   const handleDelete = () => {
@@ -162,9 +156,6 @@ export const TaskActionModal = ({
   };
 
   const handleClose = () => {
-    if (isEditing && !isMobile) {
-      handleCancel();
-    }
     onClose();
   };
 
@@ -227,6 +218,14 @@ export const TaskActionModal = ({
               <>
                 <ActionButton
                   variant="outlined"
+                  startIcon={<Delete />}
+                  onClick={handleDelete}
+                  color="error"
+                >
+                  Delete Task
+                </ActionButton>
+                <ActionButton
+                  variant="outlined"
                   startIcon={<Edit />}
                   onClick={handleEditClick}
                   color="primary"
@@ -234,14 +233,6 @@ export const TaskActionModal = ({
                   Edit Task
                 </ActionButton>
                 
-                <ActionButton
-                  variant="outlined"
-                  startIcon={<Delete />}
-                  onClick={handleDelete}
-                  color="error"
-                >
-                  Delete Task
-                </ActionButton>
               </>
             ) : (
               <EditSection>

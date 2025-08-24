@@ -5,7 +5,7 @@ import useSession from '../../app/hooks/sessionHook';
 import Tasks from '../Task/Tasks';
 import TaskDialog, { FooterWrapper } from '../TaskDialog/TaskDialog';
 import { Task } from '../../models';
-import { Container, Button } from '@mui/material';
+import { Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import { useSelector } from '../../app/store';
 import { getTasksSelector } from '../../app/selectors/tasksSelectors';
 
@@ -22,6 +22,8 @@ const TaskPageWrapper = styled.div`
 export const TaskPage = () => {
   const tasks = useSelector(getTasksSelector);
   const {onAdd, onUpdate, onDone, onDelete} = useSession();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [openDialog, setOpenDialog] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const { t } = useTranslation();
@@ -37,7 +39,8 @@ export const TaskPage = () => {
 
   const handleEdit = (task: Task) => {
     setEditingTask(task);
-    setOpenDialog(true);
+    if(isMobile) onUpdate(task);
+    if(!isMobile) setOpenDialog(true);
   };
 
   const handleDelete = (task: Task) => {

@@ -32,8 +32,7 @@ interface TasksProps {
   onDelete: (task: TaskModel) => void;
 }
 
-const Tasks = (props: TasksProps) => {
-  const { tasks, onMarkDone, onEdit, onDelete } = props;
+const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
   const { t } = useTranslation();
   const complete = tasks.filter(task => task.done === true).length;
   const incomplete = tasks.length - complete;
