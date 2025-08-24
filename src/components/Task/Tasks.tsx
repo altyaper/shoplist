@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
 import { Task as TaskModel } from '../../models';
 import { palette } from '../../themes/colors';
+import { PopularItems } from '../PopularItems';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -48,7 +49,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
         {/* Incomplete Tasks */}
         {incomplete > 0 && (
           <>
-            <Container style={{backgroundColor: palette['gray-3']}}>
+            <Container style={{ backgroundColor: palette['gray-3'] }}>
               <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
                 <Typography variant='h6' style={{ color: palette['charcoal'], fontSize: '1em' }}>
                   {t("tasks_title")} ({incomplete})
@@ -61,29 +62,34 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                   aria-controls={pendingSectionId}
                   aria-expanded={!pendingSectionCollapsed}
                   title={pendingSectionCollapsed ? 'Expand pending section' : 'Collapse pending section'}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "transparent", // disables the hover background
+                    },
+                  }}
                 >
                   {pendingSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
                 </IconButton>
               </Stack>
             </Container>
             <Container disableGutters>
-            {!pendingSectionCollapsed && tasks.filter(task => !task.done).map((task) => (
-              <Task 
-              key={`incomplete-${task.idx}`} 
-              task={task}
-              onMarkDone={onMarkDone}
-              onEdit={onEdit}
-              onDelete={onDelete}
-              />
-            ))}
+              {!pendingSectionCollapsed && tasks.filter(task => !task.done).map((task) => (
+                <Task
+                  key={`incomplete-${task.idx}`}
+                  task={task}
+                  onMarkDone={onMarkDone}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
             </Container>
           </>
         )}
-        
+
         {/* Completed Tasks */}
         {complete > 0 && (
           <>
-            <Container style={{backgroundColor: palette['gray-3']}}>
+            <Container style={{ backgroundColor: palette['gray-3'] }}>
               <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
                 <Typography variant='h6' style={{ color: palette['purpure-1'], fontSize: '1em' }}>
                   Completed ({complete})
@@ -96,6 +102,11 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                   aria-controls={completedSectionId}
                   aria-expanded={!completedSectionCollapsed}
                   title={completedSectionCollapsed ? 'Expand completed section' : 'Collapse completed section'}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "transparent", // disables the hover background
+                    },
+                  }}
                 >
                   {completedSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
                 </IconButton>
@@ -106,29 +117,30 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                 id={completedSectionId}
                 role="region"
                 aria-hidden={completedSectionCollapsed}
-                >
+              >
                 {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
-                  <Task 
-                    key={`complete-${task.idx}`} 
+                  <Task
+                    key={`complete-${task.idx}`}
                     task={task}
                     onMarkDone={onMarkDone}
                     onEdit={onEdit}
                     onDelete={onDelete}
-                    />
-                  ))}
+                  />
+                ))}
               </div>
             </Container>
           </>
         )}
+        <PopularItems />
         {!tasks.length && (
-        <Container>
-          <Empty>
-            <Typography variant='h5' style={{ fontWeight: 'bold'}}>
-              {t('empty_tasks')}
-            </Typography>
-            <p>{t('empty_tasks_two')}</p>
-          </Empty>
-        </Container>
+          <Container>
+            <Empty>
+              <Typography variant='h5' style={{ fontWeight: 'bold' }}>
+                {t('empty_tasks')}
+              </Typography>
+              <p>{t('empty_tasks_two')}</p>
+            </Empty>
+          </Container>
         )}
       </TasksWrapper>
     </div>

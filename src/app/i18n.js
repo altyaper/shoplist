@@ -28,7 +28,9 @@ const resources = {
       save: 'Save',
       delete: 'Delete',
       cancel: 'Cancel',
-      edit_item: 'Edit item'
+      edit_item: 'Edit item',
+      popular_items: 'Popular Items',
+      show_more: 'Show More'
     }
   },
   'es-MX': {
@@ -50,7 +52,9 @@ const resources = {
       save: 'Guardar',
       delete: 'Eliminar',
       cancel: 'Cancelar',
-      edit_item: 'Editar articulo'
+      edit_item: 'Editar articulo',
+      popular_items: 'Artículos Populares',
+      show_more: 'Mostrar Más'
     }
   },
 };
