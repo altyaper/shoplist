@@ -4,7 +4,7 @@ import { EditOutlined, MoreVert, DeleteOutline } from '@mui/icons-material';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { TaskProps, FlagProps } from '../../models';
+import { TaskProps, FlagProps, Task as TaskModel } from '../../models';
 import { TaskActionModal } from './TaskActionModal';
 
 dayjs.extend(relativeTime);
@@ -99,6 +99,12 @@ export const Task = ({
     onDelete(task);
   };
 
+  // Handle edit from mobile modal - this should update the task directly without opening TaskDialog
+  const handleMobileEdit = (updatedTask: TaskModel) => {
+    onEdit(updatedTask);
+    setShowMobileModal(false);
+  };
+
   const handleMobileMenuOpen = () => {
     setShowMobileModal(true);
   };
@@ -169,7 +175,7 @@ export const Task = ({
           open={showMobileModal}
           onClose={handleMobileMenuClose}
           task={task}
-          onEdit={handleEdit}
+          onEdit={handleMobileEdit}
           onDelete={handleDelete}
         />
       )}

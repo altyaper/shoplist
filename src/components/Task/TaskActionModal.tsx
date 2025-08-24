@@ -70,17 +70,12 @@ const SaveButton = styled(Button)`
     background: none;
     border: none;
     box-shadow: none;
-    color: #1976d2;
+    color: #A362EA;
     padding: 8px 16px;
     min-width: auto;
     text-transform: none;
     font-size: 14px;
     font-weight: 500;
-    
-    &:hover {
-      background: rgba(25, 118, 210, 0.04);
-      box-shadow: none;
-    }
   }
 `;
 
@@ -89,17 +84,13 @@ const DeleteButton = styled(Button)`
     background: none;
     border: none;
     box-shadow: none;
-    color: #d32f2f;
+    color: #A362EA;
     padding: 8px 16px;
     min-width: auto;
     text-transform: none;
     font-size: 14px;
     font-weight: 500;
-    
-    &:hover {
-      background: rgba(211, 47, 47, 0.04);
-      box-shadow: none;
-    }
+    margin-right: auto;
   }
 `;
 
@@ -214,6 +205,12 @@ export const TaskActionModal = ({
               autoFocus
             />
             <ActionButtonsContainer>
+              <DeleteButton
+                onClick={handleDelete}
+                startIcon={<Delete />}
+              >
+                Delete
+              </DeleteButton>
               <SaveButton
                 onClick={handleSave}
                 startIcon={<Save />}
@@ -221,12 +218,6 @@ export const TaskActionModal = ({
               >
                 Save
               </SaveButton>
-              <DeleteButton
-                onClick={handleDelete}
-                startIcon={<Delete />}
-              >
-                Delete
-              </DeleteButton>
             </ActionButtonsContainer>
           </>
         ) : (
