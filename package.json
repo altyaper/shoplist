@@ -42,8 +42,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "test:ui": "vitest --ui",
-    "prepare": "husky"
+    "test:ui": "vitest --ui"
   },
   "eslintConfig": {
     "extends": [
@@ -59,11 +58,6 @@
           "import/no-anonymous-default-export": "off"
         }
       }
-    ]
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
     ]
   },
   "browserslist": {
@@ -85,9 +79,7 @@
     "@vitejs/plugin-react": "^4.1.1",
     "@vitest/ui": "^0.34.6",
     "eslint": "^9.34.0",
-    "husky": "^9.1.7",
     "jsdom": "^23.0.1",
-    "lint-staged": "^16.1.5",
     "vite": "^4.5.0",
     "vitest": "^0.34.6"
   }
