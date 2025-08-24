@@ -3,19 +3,17 @@ import { Container, Typography, Stack, IconButton } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styled from 'styled-components';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
 import { Task as TaskModel } from '../../models';
 import { palette } from '../../themes/colors';
 import { PopularItems } from '../PopularItems';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-
 const TasksWrapper = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  padding-bottom: 100px;
 `;
 
 const Empty = styled.div`

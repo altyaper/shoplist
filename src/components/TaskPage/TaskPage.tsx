@@ -16,8 +16,9 @@ const MainFooterWrapper = styled(FooterWrapper)`
 const TaskPageWrapper = styled.div`
   height: 100%;
   position: absolute;
-  width: 100%;`
-;
+  width: 100%;
+  padding-bottom: 100px;
+;`
 
 export const TaskPage = () => {
   const tasks = useSelector(getTasksSelector);

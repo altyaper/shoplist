@@ -103,9 +103,11 @@ export const PopularItems = () => {
                         ))}
                     </Grid>
                     {visibleCount < popularItems.length && (
-                        <ShowMoreButton variant="text" onClick={handleShowMore}>
-                            {t('show_more')}
-                        </ShowMoreButton>
+                        <div style={{ textAlign: 'center', marginTop: '0.7em' }}>
+                            <ShowMoreButton variant="text" onClick={handleShowMore}>
+                                {t('show_more')}
+                            </ShowMoreButton>
+                        </div>
                     )}
                 </Container>
             )}
