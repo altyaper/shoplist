@@ -6,7 +6,9 @@ import {
   TextField, 
   Box,
   Typography,
-  Slide
+  Slide,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import { Close, Edit, Delete, Save } from '@mui/icons-material';
 import styled from 'styled-components';
@@ -63,6 +65,51 @@ const EditSection = styled.div`
   border-top: 1px solid #e0e0e0;
 `;
 
+const SaveButton = styled(Button)`
+  && {
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #1976d2;
+    padding: 8px 16px;
+    min-width: auto;
+    text-transform: none;
+    font-size: 14px;
+    font-weight: 500;
+    
+    &:hover {
+      background: rgba(25, 118, 210, 0.04);
+      box-shadow: none;
+    }
+  }
+`;
+
+const DeleteButton = styled(Button)`
+  && {
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: #d32f2f;
+    padding: 8px 16px;
+    min-width: auto;
+    text-transform: none;
+    font-size: 14px;
+    font-weight: 500;
+    
+    &:hover {
+      background: rgba(211, 47, 47, 0.04);
+      box-shadow: none;
+    }
+  }
+`;
+
+const ActionButtonsContainer = styled(Box)`
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  justify-content: flex-start;
+`;
+
 interface TaskActionModalProps {
   open: boolean;
   onClose: () => void;
@@ -78,8 +125,18 @@ export const TaskActionModal = ({
   onEdit,
   onDelete
 }: TaskActionModalProps) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isEditing, setIsEditing] = useState(isMobile);
   const [editText, setEditText] = useState(task.text);
+
+  // Reset edit state when modal opens/closes or task changes
+  React.useEffect(() => {
+    if (open) {
+      setIsEditing(isMobile);
+      setEditText(task.text);
+    }
+  }, [open, task.text, isMobile]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -92,13 +149,20 @@ export const TaskActionModal = ({
         text: editText.trim()
       });
     }
-    setIsEditing(false);
-    onClose();
+    if (!isMobile) {
+      setIsEditing(false);
+    } else {
+      onClose();
+    }
   };
 
   const handleCancel = () => {
     setEditText(task.text);
-    setIsEditing(false);
+    if (!isMobile) {
+      setIsEditing(false);
+    } else {
+      onClose();
+    }
   };
 
   const handleDelete = () => {
@@ -107,7 +171,7 @@ export const TaskActionModal = ({
   };
 
   const handleClose = () => {
-    if (isEditing) {
+    if (isEditing && !isMobile) {
       handleCancel();
     }
     onClose();
@@ -123,7 +187,7 @@ export const TaskActionModal = ({
     >
       <ModalHeader>
         <Typography variant="h6" component="div">
-          Task Actions
+          {isMobile ? 'Edit Task' : 'Task Actions'}
         </Typography>
         <IconButton
           edge="end"
@@ -136,31 +200,9 @@ export const TaskActionModal = ({
       </ModalHeader>
       
       <ModalContent>
-        {!isEditing ? (
+        {isMobile ? (
+          // Mobile: Show TextField immediately
           <>
-            <ActionButton
-              variant="outlined"
-              startIcon={<Edit />}
-              onClick={handleEditClick}
-              color="primary"
-            >
-              Edit Task
-            </ActionButton>
-            
-            <ActionButton
-              variant="outlined"
-              startIcon={<Delete />}
-              onClick={handleDelete}
-              color="error"
-            >
-              Delete Task
-            </ActionButton>
-          </>
-        ) : (
-          <EditSection>
-            <Typography variant="subtitle1" gutterBottom>
-              Edit Task
-            </Typography>
             <TextField
               fullWidth
               multiline
@@ -169,27 +211,83 @@ export const TaskActionModal = ({
               onChange={(e) => setEditText(e.target.value)}
               variant="outlined"
               placeholder="Enter task text..."
-              sx={{ marginBottom: 2 }}
+              autoFocus
             />
-            <Box display="flex" gap={2}>
-              <Button
-                variant="outlined"
-                onClick={handleCancel}
-                fullWidth
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<Save />}
+            <ActionButtonsContainer>
+              <SaveButton
                 onClick={handleSave}
-                fullWidth
+                startIcon={<Save />}
                 disabled={!editText.trim() || editText === task.text}
               >
                 Save
-              </Button>
-            </Box>
-          </EditSection>
+              </SaveButton>
+              <DeleteButton
+                onClick={handleDelete}
+                startIcon={<Delete />}
+              >
+                Delete
+              </DeleteButton>
+            </ActionButtonsContainer>
+          </>
+        ) : (
+          // Desktop: Show action buttons first
+          <>
+            {!isEditing ? (
+              <>
+                <ActionButton
+                  variant="outlined"
+                  startIcon={<Edit />}
+                  onClick={handleEditClick}
+                  color="primary"
+                >
+                  Edit Task
+                </ActionButton>
+                
+                <ActionButton
+                  variant="outlined"
+                  startIcon={<Delete />}
+                  onClick={handleDelete}
+                  color="error"
+                >
+                  Delete Task
+                </ActionButton>
+              </>
+            ) : (
+              <EditSection>
+                <Typography variant="subtitle1" gutterBottom>
+                  Edit Task
+                </Typography>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  variant="outlined"
+                  placeholder="Enter task text..."
+                  sx={{ marginBottom: 2 }}
+                />
+                <Box display="flex" gap={2}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleCancel}
+                    fullWidth
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    startIcon={<Save />}
+                    onClick={handleSave}
+                    fullWidth
+                    disabled={!editText.trim() || editText === task.text}
+                  >
+                    Save
+                  </Button>
+                </Box>
+              </EditSection>
+            )}
+          </>
         )}
       </ModalContent>
     </MobileModalWrapper>

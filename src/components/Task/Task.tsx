@@ -128,7 +128,7 @@ export const Task = ({
             </TaskText>
           </Stack>
           </Grid>
-          <Grid item xs={2} justifyContent="flex-end">
+          <Grid item xs={2} justifyContent="flex-end" sx={{ textAlign: 'center'}}>
             {isMobile ? (
               <ActionIcon
                 size="small"
