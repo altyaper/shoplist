@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Dialog, 
   IconButton, 
@@ -10,10 +10,11 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import { Close, Edit, Delete, Save } from '@mui/icons-material';
+import { Close, Edit, Delete, Save, DeleteOutline, SaveOutlined, EditOutlined, Check, CheckOutlined } from '@mui/icons-material';
 import styled from 'styled-components';
 import { TransitionProps } from '@mui/material/transitions';
 import { Task } from '../../models';
+import { useTranslation } from 'react-i18next';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,15 +35,14 @@ const MobileModalWrapper = styled(Dialog)`
     bottom: 0;
     left: 0;
     right: 0;
-  }
-`;
-
+    }
+    `;
+    
 const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid #e0e0e0;
 `;
 
 const ModalContent = styled.div`
@@ -75,7 +75,7 @@ const SaveButton = styled(Button)`
     min-width: auto;
     text-transform: none;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: bold;
   }
 `;
 
@@ -89,7 +89,7 @@ const DeleteButton = styled(Button)`
     min-width: auto;
     text-transform: none;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: boldS;
     margin-right: auto;
   }
 `;
@@ -120,9 +120,10 @@ export const TaskActionModal = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [isEditing, setIsEditing] = useState(isMobile);
   const [editText, setEditText] = useState(task.text);
+  const { t } = useTranslation();
 
   // Reset edit state when modal opens/closes or task changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       setIsEditing(isMobile);
       setEditText(task.text);
@@ -198,16 +199,16 @@ export const TaskActionModal = ({
             <ActionButtonsContainer>
               <DeleteButton
                 onClick={handleDelete}
-                startIcon={<Delete />}
+                startIcon={<DeleteOutline />}
               >
-                Delete
+                {t('delete')}
               </DeleteButton>
               <SaveButton
                 onClick={handleSave}
-                startIcon={<Save />}
+                startIcon={<CheckOutlined />}
                 disabled={!editText.trim() || editText === task.text}
               >
-                Save
+                {t('save')}
               </SaveButton>
             </ActionButtonsContainer>
           </>
@@ -218,26 +219,26 @@ export const TaskActionModal = ({
               <>
                 <ActionButton
                   variant="outlined"
-                  startIcon={<Delete />}
+                  startIcon={<DeleteOutline />}
                   onClick={handleDelete}
                   color="error"
                 >
-                  Delete Task
+                  {t('delete_item')}
                 </ActionButton>
                 <ActionButton
                   variant="outlined"
-                  startIcon={<Edit />}
+                  startIcon={<EditOutlined />}
                   onClick={handleEditClick}
                   color="primary"
                 >
-                  Edit Task
+                  {t('edit_item')}
                 </ActionButton>
                 
               </>
             ) : (
               <EditSection>
                 <Typography variant="subtitle1" gutterBottom>
-                  Edit Task
+                  {t('edit_item')}
                 </Typography>
                 <TextField
                   fullWidth
@@ -255,7 +256,7 @@ export const TaskActionModal = ({
                     onClick={handleCancel}
                     fullWidth
                   >
-                    Cancel
+                    {t('cancel')}
                   </Button>
                   <Button
                     variant="contained"
@@ -264,7 +265,7 @@ export const TaskActionModal = ({
                     fullWidth
                     disabled={!editText.trim() || editText === task.text}
                   >
-                    Save
+                    {t('save')}
                   </Button>
                 </Box>
               </EditSection>

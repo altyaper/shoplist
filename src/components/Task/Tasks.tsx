@@ -126,7 +126,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
             <Typography variant='h5' style={{ fontWeight: 'bold'}}>
               {t('empty_tasks')}
             </Typography>
-            <p>Nothing here yet… start adding your groceries!</p>
+            <p>{t('empty_tasks_two')}</p>
           </Empty>
         </Container>
         )}

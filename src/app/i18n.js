@@ -14,15 +14,21 @@ const resources = {
       completed_task: 'Picked!',
       delete_confirm_message: 'Are you sure you want to delete all the items?',
       create_task_title: 'Create new item',
-      edit_task_title: 'Edit new item',
+      edit_task_title: 'Edit item',
       empty_tasks: 'Your list is empty',
+      empty_tasks_two: 'Nothing here yet… start adding your groceries!',
       delete_on_complete_label: 'Delete on picked',
       create_task: 'ADD ITEM',
       save_item: 'SAVE ITEM',
+      delete_item: 'DELETE ITEM',
       share_list_aria: 'Share shopping list',
       shopping_list: 'Shopping List',
       no_pending_items: 'No pending items to share',
       list_copied: 'List copied to clipboard!',
+      save: 'Save',
+      delete: 'Delete',
+      cancel: 'Cancel',
+      edit_item: 'Edit item'
     }
   },
   'es-MX': {
@@ -36,10 +42,15 @@ const resources = {
       empty_tasks: 'NO HAY ARTÍCULOS',
       delete_on_complete_label: 'Eliminar al agarrar',
       create_task: 'AGREGAR ARTÍCULO',
+      delete_item: 'ELIMINAR ARTICULO',
       share_list_aria: 'Compartir lista de compras',
       shopping_list: 'Lista de Compras',
       no_pending_items: 'No hay artículos pendientes para compartir',
       list_copied: '¡Lista copiada al portapapeles!',
+      save: 'Guardar',
+      delete: 'Eliminar',
+      cancel: 'Cancelar',
+      edit_item: 'Editar articulo'
     }
   },
 };
