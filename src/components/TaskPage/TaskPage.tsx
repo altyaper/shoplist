@@ -22,13 +22,13 @@ const TaskPageWrapper = styled.div`
 
 export const TaskPage = () => {
   const tasks = useSelector(getTasksSelector);
-  const {onAdd, onUpdate, onDone, onDelete} = useSession();
+  const { onAdd, onUpdate, onDone, onDelete } = useSession();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [openDialog, setOpenDialog] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const { t } = useTranslation();
-  
+
   const handleOnSubmit = (task: Task) => {
     if (editingTask) {
       onUpdate(task);
@@ -40,14 +40,14 @@ export const TaskPage = () => {
 
   const handleEdit = (task: Task) => {
     setEditingTask(task);
-    if(isMobile) onUpdate(task);
-    if(!isMobile) setOpenDialog(true);
+    if (isMobile) onUpdate(task);
+    if (!isMobile) setOpenDialog(true);
   };
 
   const handleDelete = (task: Task) => {
     onDelete(task);
   };
-  
+
   const handleMarkDone = (task: Task) => {
     onDone(task);
   };
