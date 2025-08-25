@@ -129,7 +129,6 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
             </Container>
           </>
         )}
-        <PopularItems />
         {!tasks.length && (
           <Container>
             <Empty>
@@ -140,6 +139,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
             </Empty>
           </Container>
         )}
+        <PopularItems />
       </TasksWrapper>
     </div>
   )
