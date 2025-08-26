@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { ArrowBack } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { Task } from '../../models';
+import { categoryMap } from '../../data/categoryMap';
 
 
 const newTaskSchema = Yup.object().shape({
@@ -99,7 +100,8 @@ export const TaskDialog = ({
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 setSubmitting(false);
-                onSubmit(values);
+                const category = categoryMap[values.text.toLowerCase()];
+                onSubmit({ ...values, category });
                 onCloseModal()
               }, 500);
             }}

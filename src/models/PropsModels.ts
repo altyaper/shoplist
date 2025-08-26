@@ -1,9 +1,12 @@
+import { Category } from "./Category";
+
 export interface Task {
   idx: number;
   createdAt: string;
   done: boolean;
   text: string;
   deleteOnComplete: boolean;
+  category?: Category;
 }
 
 export interface HamburgerButtonProps {

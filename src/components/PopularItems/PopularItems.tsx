@@ -14,6 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { popularItems } from '../../data/popularItems';
+import { categoryMap } from '../../data/categoryMap';
 import { palette } from '../../themes/colors';
 import useSession from '../../app/hooks/sessionHook';
 
@@ -53,7 +54,8 @@ export const PopularItems = () => {
             deleteOnComplete: true,
             idx: 0,
             createdAt: '',
-            done: false
+            done: false,
+            category: categoryMap[item.toLowerCase()],
         });
     };
 

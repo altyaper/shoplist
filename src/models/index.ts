@@ -1,1 +1,2 @@
-export * from './PropsModels';
+export * from "./PropsModels";
+export * from "./Category";
