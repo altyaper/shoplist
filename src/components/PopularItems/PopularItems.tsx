@@ -28,7 +28,7 @@ const ChipStyled = styled(Chip)`
 `;
 
 const PopularItemsWrapper = styled.div`
-  margin-top: 2rem;
+  margin-top: 0.5em;
 `;
 
 const ShowMoreButton = styled(Button)`
@@ -61,16 +61,15 @@ export const PopularItems = () => {
 
     return (
         <PopularItemsWrapper>
-            <Container style={{ backgroundColor: palette['gray-3'] }}>
+            <Container style={{ backgroundColor: palette['gray-2'] }}>
                 <Stack
                     direction="row"
                     alignItems="center"
                     spacing={1}
-                    style={{ marginTop: '2rem', marginBottom: '1rem' }}
                 >
                     <Typography
                         variant="h6"
-                        style={{ color: palette['charcoal'], fontSize: '1em' }}
+                        style={{ color: palette['charcoal'], fontSize: '0.8em' }}
                     >
                         {t('popular_items')}
                     </Typography>

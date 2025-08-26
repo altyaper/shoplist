@@ -5,9 +5,13 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styled from 'styled-components';
 import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
-import { Task as TaskModel, Category } from '../../models';
+import { Task as TaskModel } from '../../models';
 import { palette } from '../../themes/colors';
 import { PopularItems } from '../PopularItems';
+
+const GroupWrapper = styled.div`
+  margin-bottom: 0.5em;
+`
 
 const TasksWrapper = styled.ul`
   list-style: none;
@@ -58,10 +62,10 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
     <div>
       <TasksWrapper className="list">
         {Object.keys(groupedTasks).sort().map(category => (
-          <div key={category}>
-            <Container style={{ backgroundColor: palette['gray-3'] }}>
-              <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
-                <Typography variant='h6' style={{ color: palette['charcoal'], fontSize: '1em' }}>
+          <GroupWrapper key={category}>
+            <Container style={{ backgroundColor: palette['gray-2'] }}>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Typography variant='h6' style={{ color: palette['charcoal'], fontSize: '0.8em' }}>
                   {category} ({groupedTasks[category].length})
                 </Typography>
                 <IconButton
@@ -92,15 +96,15 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                 />
               ))}
             </Container>
-          </div>
+          </GroupWrapper>
         ))}
 
         {/* Completed Tasks */}
         {completeTasks.length > 0 && (
-          <>
-            <Container style={{ backgroundColor: palette['gray-3'] }}>
-              <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
-                <Typography variant='h6' style={{ color: palette['purpure-1'], fontSize: '1em' }}>
+          <GroupWrapper>
+            <Container style={{ backgroundColor: palette['gray-2'] }}>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Typography variant='h6' style={{ color: palette['purpure-1'], fontSize: '0.8em' }}>
                   Completed ({completeTasks.length})
                 </Typography>
                 <IconButton
@@ -138,7 +142,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                 ))}
               </div>
             </Container>
-          </>
+          </GroupWrapper>
         )}
         {!tasks.length && (
           <Container>
