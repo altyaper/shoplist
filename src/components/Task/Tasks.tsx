@@ -48,7 +48,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
   };
 
   const groupedTasks = incompleteTasks.reduce((acc, task) => {
-    const category = task.category || 'Uncategorized';
+    const category = task.category || 'Other';
     if (!acc[category]) {
       acc[category] = [];
     }
