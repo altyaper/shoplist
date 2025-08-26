@@ -5,7 +5,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styled from 'styled-components';
 import { useTranslation } from "react-i18next";
 import { Task } from "./Task";
-import { Task as TaskModel } from '../../models';
+import { Task as TaskModel, Category } from '../../models';
 import { palette } from '../../themes/colors';
 import { PopularItems } from '../PopularItems';
 
@@ -33,45 +33,56 @@ interface TasksProps {
 
 const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
   const { t } = useTranslation();
-  const complete = tasks.filter(task => task.done === true).length;
-  const incomplete = tasks.length - complete;
+  const completeTasks = tasks.filter(task => task.done);
+  const incompleteTasks = tasks.filter(task => !task.done);
+
   const [completedSectionCollapsed, setCompletedSectionCollapsed] = useState<boolean>(false);
-  const [pendingSectionCollapsed, setPendingSectionCollapsed] = useState<boolean>(false);
+  const [collapsedCategories, setCollapsedCategories] = useState<Record<string, boolean>>({});
+
+  const toggleCategoryCollapse = (category: string) => {
+    setCollapsedCategories(prev => ({ ...prev, [category]: !prev[category] }));
+  };
+
+  const groupedTasks = incompleteTasks.reduce((acc, task) => {
+    const category = task.category || 'Uncategorized';
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(task);
+    return acc;
+  }, {} as Record<string, TaskModel[]>);
 
   const completedSectionId = 'completed-section';
-  const pendingSectionId = 'pending-section';
 
   return (
     <div>
       <TasksWrapper className="list">
-        {/* Incomplete Tasks */}
-        {incomplete > 0 && (
-          <>
+        {Object.keys(groupedTasks).sort().map(category => (
+          <div key={category}>
             <Container style={{ backgroundColor: palette['gray-3'] }}>
               <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
                 <Typography variant='h6' style={{ color: palette['charcoal'], fontSize: '1em' }}>
-                  {t("tasks_title")} ({incomplete})
+                  {category} ({groupedTasks[category].length})
                 </Typography>
                 <IconButton
                   size="small"
-                  onClick={() => setPendingSectionCollapsed(!pendingSectionCollapsed)}
+                  onClick={() => toggleCategoryCollapse(category)}
                   style={{ color: palette['purpure-1'], marginLeft: 'auto' }}
-                  aria-label={pendingSectionCollapsed ? 'Expand pending section' : 'Collapse pending section'}
-                  aria-controls={pendingSectionId}
-                  aria-expanded={!pendingSectionCollapsed}
-                  title={pendingSectionCollapsed ? 'Expand pending section' : 'Collapse pending section'}
+                  aria-label={collapsedCategories[category] ? `Expand ${category} section` : `Collapse ${category} section`}
+                  aria-expanded={!collapsedCategories[category]}
+                  title={collapsedCategories[category] ? `Expand ${category} section` : `Collapse ${category} section`}
                   sx={{
                     "&:hover": {
-                      backgroundColor: "transparent", // disables the hover background
+                      backgroundColor: "transparent",
                     },
                   }}
                 >
-                  {pendingSectionCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                  {collapsedCategories[category] ? <ExpandMoreIcon /> : <ExpandLessIcon />}
                 </IconButton>
               </Stack>
             </Container>
             <Container disableGutters>
-              {!pendingSectionCollapsed && tasks.filter(task => !task.done).map((task) => (
+              {!collapsedCategories[category] && groupedTasks[category].map((task) => (
                 <Task
                   key={`incomplete-${task.idx}`}
                   task={task}
@@ -81,16 +92,16 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                 />
               ))}
             </Container>
-          </>
-        )}
+          </div>
+        ))}
 
         {/* Completed Tasks */}
-        {complete > 0 && (
+        {completeTasks.length > 0 && (
           <>
             <Container style={{ backgroundColor: palette['gray-3'] }}>
               <Stack direction="row" alignItems="center" spacing={1} style={{ marginTop: '2rem', marginBottom: '1rem' }}>
                 <Typography variant='h6' style={{ color: palette['purpure-1'], fontSize: '1em' }}>
-                  Completed ({complete})
+                  Completed ({completeTasks.length})
                 </Typography>
                 <IconButton
                   size="small"
@@ -116,7 +127,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
                 role="region"
                 aria-hidden={completedSectionCollapsed}
               >
-                {!completedSectionCollapsed && tasks.filter(task => task.done).map((task) => (
+                {!completedSectionCollapsed && completeTasks.map((task) => (
                   <Task
                     key={`complete-${task.idx}`}
                     task={task}
