@@ -72,7 +72,7 @@ export const TaskDialog = ({
 }: TaskDialogProps) => {
   const { t } = useTranslation();
   const isEditing = !!task;
-  
+
   const initialValues = task ? {
     idx: task.idx,
     text: task.text,
