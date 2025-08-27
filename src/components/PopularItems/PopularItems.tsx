@@ -39,7 +39,7 @@ const ShowMoreButton = styled(Button)`
 `;
 
 export const PopularItems = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { onAdd } = useSession();
     const [collapsed, setCollapsed] = useState(false);
     const [visibleCount, setVisibleCount] = useState(10);
@@ -57,6 +57,14 @@ export const PopularItems = () => {
             done: false,
             category: categoryMap[item.toLowerCase()],
         });
+    };
+
+    const getPopularItemsByLang = () => {
+        const lang = i18n.language;
+        if (lang === 'es-MX') {
+            return popularItems['es-MX'];
+        }
+        return popularItems['en-US'];
     };
 
     return (
@@ -97,15 +105,19 @@ export const PopularItems = () => {
             {!collapsed && (
                 <Container>
                     <Grid container spacing={1.2} style={{ marginTop: '1rem' }}>
-                        {popularItems.slice(0, visibleCount).map((item, index) => (
+                        {getPopularItemsByLang().slice(0, visibleCount).map((item, index) => (
                             <Grid item key={index}>
-                                <ChipStyled label={item} onClick={() => handleItemClick(item)} icon={<AddIcon />} />
+                                <ChipStyled
+                                    label={item}
+                                    onClick={() => handleItemClick(item)}
+                                    icon={<AddIcon />}
+                                />
                             </Grid>
                         ))}
                     </Grid>
-                    {visibleCount < popularItems.length && (
-                        <div style={{ textAlign: 'center', marginTop: '0.7em' }}>
-                            <ShowMoreButton variant="text" onClick={handleShowMore}>
+                    {visibleCount < getPopularItemsByLang().length && (
+                        <div style={{ textAlign: 'center', marginTop: '1em' }}>
+                            <ShowMoreButton onClick={handleShowMore}>
                                 {t('show_more')}
                             </ShowMoreButton>
                         </div>
