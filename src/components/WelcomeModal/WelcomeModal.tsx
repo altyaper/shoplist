@@ -4,8 +4,9 @@ import { Modal, Box, Typography, Button } from '@mui/material';
 import { SHOPLIST_CONFIG } from '../../constants';
 
 const WelcomeModal: React.FC = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [open, setOpen] = useState(false);
+    const [selectedLang, setSelectedLang] = useState(i18n.language);
 
     useEffect(() => {
         const configStr = localStorage.getItem(SHOPLIST_CONFIG);
@@ -15,9 +16,14 @@ const WelcomeModal: React.FC = () => {
         }
     }, []);
 
+    const handleLanguageChange = (lang: string) => {
+        setSelectedLang(lang);
+    };
+
     const handleClose = () => {
-        const config = { hasVisited: true };
+        const config = { hasVisited: true, language: selectedLang };
         localStorage.setItem(SHOPLIST_CONFIG, JSON.stringify(config));
+        i18n.changeLanguage(selectedLang);
         setOpen(false);
     };
 
@@ -47,6 +53,20 @@ const WelcomeModal: React.FC = () => {
                 <Typography id="welcome-modal-description" sx={{ mt: 2 }}>
                     {t('welcome_message')}
                 </Typography>
+                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Button
+                        variant={selectedLang === 'en-US' ? 'contained' : 'outlined'}
+                        onClick={() => handleLanguageChange('en-US')}
+                    >
+                        🇺🇸
+                    </Button>
+                    <Button
+                        variant={selectedLang === 'es-MX' ? 'contained' : 'outlined'}
+                        onClick={() => handleLanguageChange('es-MX')}
+                    >
+                        🇪🇸
+                    </Button>
+                </Box>
                 <Button onClick={handleClose} sx={{ mt: 2 }}>
                     {t('get_started')}
                 </Button>
