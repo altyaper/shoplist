@@ -64,7 +64,7 @@ const Tasks = ({ tasks, onMarkDone, onEdit, onDelete }: TasksProps) => {
         {Object.keys(groupedTasks).sort().map(category => (
           <GroupWrapper key={category}>
             <Container style={{ backgroundColor: palette['gray-2'] }}>
-              <Stack direction="row" alignItems="center" spacing={1}>
+              <Stack direction="row" alignItems="center" spacing={1} style={{ marginBottom: '0.5em' }}>
                 <Typography variant='h6' style={{ color: palette['charcoal'], fontSize: '0.8em' }}>
                   {category} ({groupedTasks[category].length})
                 </Typography>
