@@ -31,6 +31,10 @@ const resources = {
       edit_item: "Edit item",
       popular_items: "Popular Items",
       show_more: "Show More",
+      welcome_title: "Welcome to ShopList!",
+      welcome_message:
+        "This is a simple shopping list application. We are happy to see you here.",
+      get_started: "Get Started",
     },
   },
   "es-MX": {
@@ -56,6 +60,10 @@ const resources = {
       edit_item: "Editar articulo",
       popular_items: "Artículos Populares",
       show_more: "Mostrar Más",
+      welcome_title: "¡Bienvenido a ShopList!",
+      welcome_message:
+        "Esta es una aplicación simple de lista de compras. Estamos felices de verte aquí.",
+      get_started: "Empezar",
     },
   },
 };

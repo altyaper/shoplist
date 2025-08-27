@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal, Box, Typography, Button } from '@mui/material';
 import { SHOPLIST_CONFIG } from '../../constants';
 
 const WelcomeModal: React.FC = () => {
+    const { t } = useTranslation();
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -40,13 +42,13 @@ const WelcomeModal: React.FC = () => {
                 }}
             >
                 <Typography id="welcome-modal-title" variant="h6" component="h2">
-                    Welcome to ShopList!
+                    {t('welcome_title')}
                 </Typography>
                 <Typography id="welcome-modal-description" sx={{ mt: 2 }}>
-                    This is a simple shopping list application. We are happy to see you here.
+                    {t('welcome_message')}
                 </Typography>
                 <Button onClick={handleClose} sx={{ mt: 2 }}>
-                    Get Started
+                    {t('get_started')}
                 </Button>
             </Box>
         </Modal>

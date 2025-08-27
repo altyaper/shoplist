@@ -1,1 +1,1 @@
-export const SHOPLIST_CONFIG = 'shopListConfig';
+export const SHOPLIST_CONFIG = "shopListConfig";
