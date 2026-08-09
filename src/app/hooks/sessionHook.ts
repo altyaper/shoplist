@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { useDispatch, useSelector } from "../store";
 import {
   addTask,
+  addTasks,
   deleteAll,
   markAsDone,
   removeTask,
@@ -9,6 +10,10 @@ import {
 } from "../slices/taskSlice.js";
 import { getTasksSelector } from "../selectors/tasksSelectors";
 import { Task } from "../../models";
+import {
+  AnalyzedShoppingItem,
+  createImportedTasks,
+} from "../../features/photoImport/photoImport";
 
 const useSession = () => {
   const tasks = useSelector(getTasksSelector);
@@ -25,6 +30,11 @@ const useSession = () => {
       updatedAt: dayjs().format(),
     };
     dispatch(addTask(newTask));
+  };
+
+  const onAddMany = (items: AnalyzedShoppingItem[]) => {
+    const importedTasks = createImportedTasks(items, tasks, dayjs().format());
+    dispatch(addTasks(importedTasks));
   };
 
   const onUpdate = (task: Task) => {
@@ -50,6 +60,7 @@ const useSession = () => {
   return {
     tasks,
     onAdd,
+    onAddMany,
     onUpdate,
     onDone,
     onDelete,

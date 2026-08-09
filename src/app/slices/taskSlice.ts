@@ -20,6 +20,15 @@ export const tasksSlice = createSlice({
       }
       state.tasksList.push(payload);
     },
+    addTasks: (state, action) => {
+      state.tasksList.push(...action.payload);
+      if (db.get()) {
+        db.update(state.tasksList, 'tasks');
+      } else {
+        const recoveredDb = new LocalStorageDB('todo');
+        recoveredDb.update(state.tasksList, 'tasks');
+      }
+    },
     updateTask: (state, action) => {
       const { payload } = action;
       state.tasksList = state.tasksList.map((t: { idx: any; }) => {
@@ -55,6 +64,13 @@ export const tasksSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addTask, updateTask, deleteAll, markAsDone, removeTask } = tasksSlice.actions;
+export const {
+  addTask,
+  addTasks,
+  updateTask,
+  deleteAll,
+  markAsDone,
+  removeTask,
+} = tasksSlice.actions;
 
 export default tasksSlice.reducer

@@ -17,7 +17,6 @@ jobs:
   deploy:
     name: Build and deploy
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
@@ -33,12 +32,32 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Run tests
+        run: yarn test --run
+
       - name: Build application
         run: yarn build
 
+      - name: Sync OpenAI key to Netlify
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY is not configured; skipping Netlify secret sync."
+            exit 0
+          fi
+          npx --yes netlify-cli@27.1.1 env:set OPENAI_API_KEY \
+            "$OPENAI_API_KEY" \
+            --context production \
+            --scope functions \
+            --secret \
+            --force
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
       - name: Deploy production site
         run: >-
-          npx --yes netlify-cli@latest deploy
+          npx --yes netlify-cli@27.1.1 deploy
           --prod
           --dir=build
           --no-build
