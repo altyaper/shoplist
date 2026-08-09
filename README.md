@@ -36,7 +36,8 @@ OpenAI Responses API without exposing the API key to the browser.
 
 Add the OpenAI key as an encrypted GitHub Actions secret named
 `OPENAI_API_KEY`. On every push to `master`, the deployment workflow syncs that
-secret into Netlify's protected function environment before deploying.
+value into Netlify's production runtime environment before deploying. The key
+does not use a `VITE_` prefix, so Vite does not expose it to browser code.
 
 ```bash
 gh secret set OPENAI_API_KEY --repo altyaper/shoplist
