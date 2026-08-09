@@ -47,8 +47,6 @@ jobs:
           npx --yes netlify-cli@27.1.1 env:set OPENAI_API_KEY \
             "$OPENAI_API_KEY" \
             --context production \
-            --scope functions \
-            --secret \
             --force
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
