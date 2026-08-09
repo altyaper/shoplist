@@ -5,9 +5,11 @@ import useSession from '../../app/hooks/sessionHook';
 import Tasks from '../Task/Tasks';
 import TaskDialog, { FooterWrapper } from '../TaskDialog/TaskDialog';
 import { Task } from '../../models';
-import { Container, Button, useMediaQuery, useTheme } from '@mui/material';
+import { Container, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { PhotoCamera } from '@mui/icons-material';
 import { useSelector } from '../../app/store';
 import { getTasksSelector } from '../../app/selectors/tasksSelectors';
+import PhotoImportDialog from '../../features/photoImport/PhotoImportDialog';
 
 const MainFooterWrapper = styled(FooterWrapper)`
   padding: 2em 0;
@@ -22,12 +24,13 @@ const TaskPageWrapper = styled.div`
 
 export const TaskPage = () => {
   const tasks = useSelector(getTasksSelector);
-  const { onAdd, onUpdate, onDone, onDelete } = useSession();
+  const { onAdd, onAddMany, onUpdate, onDone, onDelete } = useSession();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [openDialog, setOpenDialog] = useState(false);
+  const [openPhotoImport, setOpenPhotoImport] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const handleOnSubmit = (task: Task) => {
     if (editingTask) {
@@ -72,16 +75,29 @@ export const TaskPage = () => {
       />
       <MainFooterWrapper>
         <Container>
-          <Button
-            size='large'
-            disableElevation
-            variant='contained'
-            fullWidth
-            type="submit"
-            onClick={handleOpenModal}
-          >
-            {t('add_task')}
-          </Button>
+          <Stack spacing={1}>
+            <Button
+              size='large'
+              disableElevation
+              variant='outlined'
+              fullWidth
+              type="button"
+              startIcon={<PhotoCamera />}
+              onClick={() => setOpenPhotoImport(true)}
+            >
+              {t('scan_photo_ai', { defaultValue: 'Scan photo with AI' })}
+            </Button>
+            <Button
+              size='large'
+              disableElevation
+              variant='contained'
+              fullWidth
+              type="button"
+              onClick={handleOpenModal}
+            >
+              {t('add_task')}
+            </Button>
+          </Stack>
         </Container>
       </MainFooterWrapper>
       <TaskDialog
@@ -89,6 +105,12 @@ export const TaskPage = () => {
         open={openDialog}
         onCloseModal={handleCloseModal}
         task={editingTask}
+      />
+      <PhotoImportDialog
+        open={openPhotoImport}
+        language={i18n.resolvedLanguage || i18n.language || 'en-US'}
+        onClose={() => setOpenPhotoImport(false)}
+        onAddItems={onAddMany}
       />
     </TaskPageWrapper>
   )

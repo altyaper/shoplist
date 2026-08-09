@@ -35,6 +35,7 @@ const resources = {
       welcome_message:
         "This is a simple shopping list application. We are happy to see you here.",
       get_started: "Get Started",
+      scan_photo_ai: "Scan photo with AI",
     },
   },
   "es-MX": {
@@ -66,6 +67,7 @@ const resources = {
       welcome_message:
         "Aquí podrás armar tu lista del súper fácil y rápido. ¡Nos alegra verte por aquí!",
       get_started: "¡Vamos allá! 🚀",
+      scan_photo_ai: "Escanear foto con IA",
     },
   },
 };
@@ -74,7 +76,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    debug: true,
+    debug: false,
     resources,
     interpolation: {
       escapeValue: false, // react already safes from xss
