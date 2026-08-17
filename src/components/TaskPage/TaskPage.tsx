@@ -84,6 +84,10 @@ export const TaskPage = () => {
               type="button"
               startIcon={<PhotoCamera />}
               onClick={() => setOpenPhotoImport(true)}
+              sx={{
+                backgroundColor: '#FFFFFF',
+                '&:hover': { backgroundColor: '#FFFFFF' },
+              }}
             >
               {t('scan_photo_ai', { defaultValue: 'Scan photo with AI' })}
             </Button>
