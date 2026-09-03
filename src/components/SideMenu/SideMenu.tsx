@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import useSession from '../../app/hooks/sessionHook';
-import { Delete, Share } from '@mui/icons-material';
+import { ContentCopy, Delete, Share } from '@mui/icons-material';
 import { DeleteButton, HamburgerButton, ShareButton } from '../Buttons';
 import { useTranslation } from 'react-i18next';
 import { BlackSideProps } from '../../models';
 import { Box, Container, Grid } from '@mui/material';
+import { formatShoppingList } from '../../utils/shoppingList';
 
 const BlackSide = styled.div<BlackSideProps>`
   border-left: 1px solid #efefef;
@@ -94,6 +95,17 @@ export const SideMenu = () => {
     }
   };
 
+  const handleCopyForLifeBot = async () => {
+    const listText = formatShoppingList(tasks);
+
+    if (!listText) {
+      alert(t('no_pending_items') || 'No pending items to copy');
+      return;
+    }
+
+    await copyToClipboard(listText);
+  };
+
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -129,6 +141,13 @@ export const SideMenu = () => {
           title={t('share_list_aria') || 'Share shopping list'}
         >
           <Share />
+        </ShareButton>
+        <ShareButton
+          onClick={handleCopyForLifeBot}
+          aria-label="Copy list for LifeBot"
+          title="Copy list for LifeBot"
+        >
+          <ContentCopy />
         </ShareButton>
         <DeleteButton
           onClick={handleCleanSession}
