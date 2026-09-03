@@ -13,5 +13,5 @@ export const formatShoppingList = (tasks: ListItem[]): string => {
     .map((task, index) => `${index + 1}. ${task.text}`)
     .join('\n');
 
-  return `Whole Foods shopping list:\n\n${items}`;
+  return items;
 };

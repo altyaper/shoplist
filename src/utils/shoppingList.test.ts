@@ -10,7 +10,7 @@ describe('formatShoppingList', () => {
     ]);
 
     expect(result).toBe(
-      'Whole Foods shopping list:\n\n1. organic eggs\n2. gluten-free cookies',
+      '1. organic eggs\n2. gluten-free cookies',
     );
   });
 
